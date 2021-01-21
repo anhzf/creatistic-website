@@ -8,9 +8,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "@types/nodemailer": "^6.4.0",
+    "@types/react-dom": "^17.0.0",
     "autoprefixer": "^10.2.1",
     "firebase": "^8.2.3",
     "next": "10.0.5",
+    "nodemailer": "^6.4.17",
     "postcss": "^8.2.4",
     "react": "17.0.1",
     "react-dom": "17.0.1",
