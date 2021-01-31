@@ -1,3 +1,5 @@
+import Overlay from 'components/elements/Overlay';
+import SubscribeNewsletter from 'components/SubscribeNewsletter';
 import Head from 'next/head'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -68,7 +70,14 @@ export default function Home() {
         </HeaderContentContainer>
       </header>
 
-      <MainContainer />
+      <MainContainer>
+        <Overlay className="flex flex-col justify-center">
+          <SubscribeNewsletter
+            title="Dapatkan info menarik dari kita!"
+            description="Daftarkan emailmu untuk menjadi orang pertama yang mendapat info menarik dari kita!"
+          />
+        </Overlay>
+      </MainContainer>
     </Container>
   )
 }

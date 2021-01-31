@@ -35,3 +35,6 @@ firestore-debug.log
 
 # vercel
 .vercel
+
+# configuration
+firebase-service-account.json
