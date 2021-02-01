@@ -1,10 +1,11 @@
-import SubscribeNewsletter from 'components/SubscribeNewsletter';
-import Overlay from 'components/elements/Overlay';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import tw from 'twin.macro';
+import { HiX } from 'react-icons/hi'
+import SubscribeNewsletter from 'components/SubscribeNewsletter';
+import Overlay from 'components/elements/Overlay';
 
 const title = 'Creatistic Official Website - Mengabadikan Cinta Dalam Furnitur';
 const desc = 'Menjawab kebutuhan furnitur anda, menciptakan cinta dalam furnitur. Memberikan anda suatu hal yang baru intuk kemajuan negri Indonesia melalui pengembangan UKM. Creatistic.id untuk Indonesia.';
@@ -52,6 +53,7 @@ export default function Home() {
           objectFit="cover"
           alt="logo creatistic"
         />
+
         <div className="absolute bottom-1/4 right-0">
           <Image
             src="/assets/bg.png"
@@ -61,6 +63,7 @@ export default function Home() {
             objectFit="contain"
           />
         </div>
+
         <div className="absolute left-1/2 sm:left-1/3 lg:left-1/4 md:right-1/3 top-8 sm:top-2 transform -translate-x-1/2">
           <Image
             src="/assets/logo creatistic.png"
@@ -70,15 +73,21 @@ export default function Home() {
             objectFit="contain"
           />
         </div>
+
         <HeaderContentContainer>
           <h2 className="my-2 font-mont text-6xl sm:text-8xl xl:text-9xl">Coming Soon</h2>
+
           <h3 className="font-light sm:text-lg">Menjawab kebutuhan furnitur anda, menciptakan cinta dalam furnitur. Memberikan anda suatu hal yang baru intuk kemajuan negri Indonesia melalui pengembangan UKM. Creatistic.id untuk Indonesia.</h3>
         </HeaderContentContainer>
       </header>
 
       <MainContainer>
         {isSubscribeModalOpen &&
-          <Overlay onClick={() => setIsSubscribeModalOpen(false)} className="flex flex-col justify-center">
+          <Overlay className="flex flex-col justify-center">
+            <Overlay.CloseButton onClick={() => setIsSubscribeModalOpen(false)}>
+              <HiX className="mx-auto text-2xl" />
+            </Overlay.CloseButton>
+
             <SubscribeNewsletter
               title="Dapatkan info menarik dari kita!"
               description="Daftarkan emailmu untuk menjadi orang pertama yang mendapat info menarik dan juga info giveaway dari kita!"
