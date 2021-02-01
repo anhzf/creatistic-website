@@ -7,16 +7,16 @@ export default function GreetingMail({ name }: Props) {
     <article>
       <img src="/assets/mail-header.jpeg" alt="header email creatisticID"/>
       <br/>
-      <font size="6">Terimakasih {name} 👋</font>
+      <h1>Terimakasih {name} 👋</h1>
 
       <div>
-        <font size="4">Terimakasih {name}... telah berlangganan dan bergabung menjadi bagian dari creatistic.id.</font>
+        <h2>Terimakasih {name}... telah berlangganan dan bergabung menjadi bagian dari creatistic.id.</h2>
       </div>
 
       <div>
-        <font size="4">
+        <h2>
           <br/>
-        </font>
+        </h2>
       </div>
 
       <div>
