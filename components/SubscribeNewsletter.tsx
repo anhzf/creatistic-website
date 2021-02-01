@@ -2,16 +2,25 @@ import subscribeNewsletterRequest from 'app/requests/subscribeNewsletterRequest'
 import { useState } from 'react';
 import tw from 'twin.macro';
 import TextInput from 'components/elements/TextInput';
+import { NewsletterSubscriber } from 'types/models';
 
 const Container = tw.form`self-center w-full max-w-md bg-white rounded-xl shadow-lg flex flex-col items-stretch`;
 
 const SubscribeNewsletterInput = tw(TextInput)`w-full max-w-xs focus:ring-blue-gray-500`;
+
+const Loader = (props: React.HTMLAttributes<HTMLOrSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" {...props}>
+    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+  </svg>
+);
 
 interface Props extends React.HTMLAttributes<HTMLFormElement> {
   title: string;
   description: string;
   emailInputPlaceholder?: string;
   nameInputPlaceholder?: string;
+  onNewSubscriberRegistered?: (subscriber: NewsletterSubscriber) => void;
 }
 
 export default function SubscribeNewsletter({
@@ -19,22 +28,28 @@ export default function SubscribeNewsletter({
   description,
   emailInputPlaceholder = 'Masukkan email kamu disini...',
   nameInputPlaceholder = 'Masukkan nama kamu disini...',
+  onNewSubscriberRegistered = () => void(0),
   ...props
 }: Props) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const subscribeNewsletter = async () => {
+  const [isProcessing, setIsProcessing] = useState(false);
+  const subscribeNewsletter = () => {
+    setIsProcessing(true);
     const req = subscribeNewsletterRequest({ name, email });
-    const res = await fetch(req);
-    const data = await res.json();
-
-    console.log({ data });
+    fetch(req).then(() => {
+      setIsProcessing(false);
+      onNewSubscriberRegistered?.({ name, email });
+    });
   };
 
   return (
     <Container
       onSubmit={e => {
         e.preventDefault();
+        // Reset form
+        setName('');
+        setEmail('');
         subscribeNewsletter();
       }}
       className="animate__animated animate__bounceIn"
@@ -66,9 +81,17 @@ export default function SubscribeNewsletter({
       </div>
       <button
         type="submit"
-        className="first:rounded-t-xl last:rounded-b-xl py-3 bg-gradient-to-br from-blue-gray-800 to-blue-gray-600 text-2xl text-white font-semibold hover:from-blue-gray-700 hover:to-blue-gray-600 focus:outline-none focus:from-blue-gray-700 focus:to-blue-gray-700"
+        disabled={isProcessing}
+        className="first:rounded-t-xl last:rounded-b-xl py-3 bg-gradient-to-br from-blue-gray-800 to-blue-gray-600 text-2xl text-white font-semibold inline-flex justify-center items-center hover:from-blue-gray-700 hover:to-blue-gray-600 focus:outline-none focus:from-blue-gray-700 focus:to-blue-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Daftar!
+        {
+          isProcessing ?
+            (<>
+              <Loader className="animate-spin mx-2 w-6 h-6" />
+              Processing...
+            </>)
+            : 'Daftar!'
+        }
       </button>
     </Container>
   )

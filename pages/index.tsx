@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -6,6 +6,7 @@ import tw from 'twin.macro';
 import { HiX } from 'react-icons/hi'
 import SubscribeNewsletter from 'components/SubscribeNewsletter';
 import Overlay from 'components/elements/Overlay';
+import Alert from 'components/elements/Alert';
 
 const title = 'Creatistic Official Website - Mengabadikan Cinta Dalam Furnitur';
 const desc = 'Menjawab kebutuhan furnitur anda, menciptakan cinta dalam furnitur. Memberikan anda suatu hal yang baru intuk kemajuan negri Indonesia melalui pengembangan UKM. Creatistic.id untuk Indonesia.';
@@ -15,11 +16,19 @@ const HeaderContentContainer = tw.section`absolute left-1/2 bottom-0 w-full max-
 
 export default function Home() {
   const router = useRouter();
+  const ALERT_TIMEOUT = 10000;
   const [isSubscribeModalOpen, setIsSubscribeModalOpen] = useState(false);
+  const [alertMsg, setAlertMsg] = useState<ReactNode | null>(null);
 
   useEffect(() => {
     setTimeout(setIsSubscribeModalOpen, 10000, true);
   }, []);
+
+  useEffect(() => {
+    if (alertMsg) {
+      setTimeout(() => setAlertMsg(null), ALERT_TIMEOUT);
+    }
+  }, [alertMsg])
 
   return (
     <Container>
@@ -91,8 +100,19 @@ export default function Home() {
             <SubscribeNewsletter
               title="Dapatkan info menarik dari kita!"
               description="Daftarkan emailmu untuk menjadi orang pertama yang mendapat info menarik dan juga info giveaway dari kita!"
+              onNewSubscriberRegistered={(data) => {
+                setIsSubscribeModalOpen(false);
+                setAlertMsg(<h1 className="font-bold text-3xl text-gray-900">Terimakasih {data.name}!</h1>);
+              }}
             />
-          </Overlay>}
+          </Overlay>
+        }
+
+        {alertMsg &&
+          <Alert timeout={ALERT_TIMEOUT}>
+            {alertMsg}
+          </Alert>
+        }
       </MainContainer>
     </Container>
   )
