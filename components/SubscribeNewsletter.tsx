@@ -1,5 +1,11 @@
 import subscribeNewsletterRequest from 'app/requests/subscribeNewsletterRequest';
-import { useState } from 'react'
+import { useState } from 'react';
+import tw from 'twin.macro';
+import TextInput from 'components/elements/TextInput';
+
+const Container = tw.form`self-center w-full max-w-md bg-white rounded-xl shadow-lg flex flex-col items-stretch`;
+
+const SubscribeNewsletterInput = tw(TextInput)`w-full max-w-xs focus:ring-blue-gray-500`;
 
 interface Props extends React.HTMLAttributes<HTMLFormElement> {
   title: string;
@@ -26,34 +32,33 @@ export default function SubscribeNewsletter({
   };
 
   return (
-    <form
-      onSubmit={(e) => {
+    <Container
+      onSubmit={e => {
         e.preventDefault();
         subscribeNewsletter();
       }}
-      className="self-center w-full max-w-md bg-white rounded-xl shadow-lg flex flex-col items-stretch" {...props}
+      className="animate__animated animate__bounceIn"
+      {...props}
     >
-      <div className="first:rounded-t-xl last:rounded-b-xl p-3  bg-gradient-to-br from-purple-500 to-indigo-500">
+      <div className="first:rounded-t-xl last:rounded-b-xl p-3  bg-gradient-to-br from-blue-gray-600 to-blue-gray-800">
         <h3 className="leading-normal text-center text-2xl text-white font-bold">{title}</h3>
       </div>
       <div className="first:rounded-t-xl last:rounded-b-xl py-4 px-6 bg-white flex flex-col space-y-2">
         <span>{description}</span>
         <div className="self-stretch p-4 flex flex-col items-center space-y-4">
-          <input
+          <SubscribeNewsletterInput
             placeholder={nameInputPlaceholder}
             value={name}
             type="text"
             required
             onChange={(e) => setName(e.target.value)}
-            className="w-full max-w-xs py-3 px-5 border-2 rounded-full focus:outline-none focus:ring-4 focus:ring-purple-500 focus:ring-opacity-70"
           />
-          <input
+          <SubscribeNewsletterInput
             placeholder={emailInputPlaceholder}
             value={email}
             type="email"
             required
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full max-w-xs py-3 px-5 border-2 rounded-full focus:outline-none focus:ring-4 focus:ring-purple-500 focus:ring-opacity-70"
           />
         </div>
 
@@ -61,10 +66,10 @@ export default function SubscribeNewsletter({
       </div>
       <button
         type="submit"
-        className="first:rounded-t-xl last:rounded-b-xl py-3 bg-gradient-to-br from-indigo-500 to-purple-600 text-2xl text-white font-semibold hover:from-indigo-400 hover:to-purple-500 focus:outline-none focus:from-indigo-600 focus:to-purple-600"
+        className="first:rounded-t-xl last:rounded-b-xl py-3 bg-gradient-to-br from-blue-gray-800 to-blue-gray-600 text-2xl text-white font-semibold hover:from-blue-gray-700 hover:to-blue-gray-600 focus:outline-none focus:from-blue-gray-700 focus:to-blue-gray-700"
       >
         Daftar!
       </button>
-    </form>
+    </Container>
   )
 }

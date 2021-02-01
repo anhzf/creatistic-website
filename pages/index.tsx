@@ -1,9 +1,10 @@
-import Overlay from 'components/elements/Overlay';
 import SubscribeNewsletter from 'components/SubscribeNewsletter';
-import Head from 'next/head'
-import Image from 'next/image'
-import { useRouter } from 'next/router'
-import tw from 'twin.macro'
+import Overlay from 'components/elements/Overlay';
+import Head from 'next/head';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import tw from 'twin.macro';
 
 const title = 'Creatistic Official Website - Mengabadikan Cinta Dalam Furnitur';
 const desc = 'Menjawab kebutuhan furnitur anda, menciptakan cinta dalam furnitur. Memberikan anda suatu hal yang baru intuk kemajuan negri Indonesia melalui pengembangan UKM. Creatistic.id untuk Indonesia.';
@@ -13,6 +14,11 @@ const HeaderContentContainer = tw.section`absolute left-1/2 bottom-0 w-full max-
 
 export default function Home() {
   const router = useRouter();
+  const [isSubscribeModalOpen, setIsSubscribeModalOpen] = useState(false);
+
+  useEffect(() => {
+    setTimeout(setIsSubscribeModalOpen, 10000, true);
+  }, []);
 
   return (
     <Container>
@@ -71,12 +77,13 @@ export default function Home() {
       </header>
 
       <MainContainer>
-        <Overlay className="flex flex-col justify-center">
-          <SubscribeNewsletter
-            title="Dapatkan info menarik dari kita!"
-            description="Daftarkan emailmu untuk menjadi orang pertama yang mendapat info menarik dari kita!"
-          />
-        </Overlay>
+        {isSubscribeModalOpen &&
+          <Overlay onClick={() => setIsSubscribeModalOpen(false)} className="flex flex-col justify-center">
+            <SubscribeNewsletter
+              title="Dapatkan info menarik dari kita!"
+              description="Daftarkan emailmu untuk menjadi orang pertama yang mendapat info menarik dan juga info giveaway dari kita!"
+            />
+          </Overlay>}
       </MainContainer>
     </Container>
   )
