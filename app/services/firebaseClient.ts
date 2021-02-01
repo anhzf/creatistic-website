@@ -1,8 +1,9 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
-import { emulators } from "../../firebase.json";
-import firebaseConfig from '../../config/firebaseConfig';
+import { emulators } from "firebase.json";
+import firebaseConfig from 'config/firebaseConfig';
+
 
 // INITIALIZE FIREBASE
 if (firebase.apps.length) firebase.app();
