@@ -7,6 +7,7 @@ import { gmailTransporter } from 'app/services/nodemailerTransporter';
 import GreetingMail from 'components/mails/Greeting';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { NewsletterSubscriber } from 'types/models';
+import absoluteUrl from 'next-absolute-url';
 
 const storeNewSubscriber = (data: NewsletterSubscriber) => fireCollection.subscriber.add({
   ...data,
@@ -15,8 +16,8 @@ const storeNewSubscriber = (data: NewsletterSubscriber) => fireCollection.subscr
   _deleted: null,
 });
 
-const sendGreetingEmail = ({ name, email }: NewsletterSubscriber) => {
-  const el = React.createElement(GreetingMail, { name });
+const sendGreetingEmail = ({ name, email }: NewsletterSubscriber, url: ReturnType<typeof absoluteUrl>) => {
+  const el = React.createElement(GreetingMail, { name, url });
   const html = ReactDOMServer.renderToStaticMarkup(el);
 
   return gmailTransporter.sendMail({
@@ -33,7 +34,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const save = await storeNewSubscriber({ name, email });
     const doc = await save.get();
 
-    await sendGreetingEmail({ name, email });
+    await sendGreetingEmail({ name, email }, absoluteUrl(req));
 
     res.status(200).json(doc.data());
   } else {

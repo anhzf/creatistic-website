@@ -1,11 +1,17 @@
+import absoluteUrl from 'next-absolute-url';
+
 interface Props {
   name: string;
+  url: ReturnType<typeof absoluteUrl>;
 }
 
-export default function GreetingMail({ name }: Props) {
+export default function GreetingMail({ name, url }: Props) {
+  const ImgUrlObj = new URL(url.origin);
+  ImgUrlObj.pathname = '/assets/mail-header.jpeg';
+
   return (
     <article>
-      <img src="/assets/mail-header.jpeg" alt="header email creatisticID"/>
+      <img src={ImgUrlObj.toString()} alt="header email creatisticID"/>
       <br/>
       <h1>Terimakasih {name} 👋</h1>
 
