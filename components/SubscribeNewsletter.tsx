@@ -23,7 +23,7 @@ interface Props extends React.HTMLAttributes<HTMLFormElement> {
   onNewSubscriberRegistered?: (subscriber: NewsletterSubscriber) => void;
 }
 
-export default function SubscribeNewsletter({
+function SubscribeNewsletter({
   title,
   description,
   emailInputPlaceholder = 'Masukkan email kamu disini...',
@@ -103,3 +103,16 @@ export default function SubscribeNewsletter({
     </Container>
   )
 }
+
+SubscribeNewsletter.Fab = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={`animate__animated animate__headShake animate__infinite ${className}`}
+    tw="fixed bottom-4 right-4 w-16 h-16 bg-white rounded-full shadow-xl flex flex-col justify-center items-center hover:(cursor-pointer bg-gray-100)"
+    {...props}
+  >
+    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gray-400 opacity-75" />
+    {children}
+  </div>
+);
+
+export default SubscribeNewsletter;

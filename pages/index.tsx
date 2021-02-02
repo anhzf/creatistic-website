@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import tw from 'twin.macro';
-import { HiX } from 'react-icons/hi'
+import { HiX, HiMail } from 'react-icons/hi'
 import SubscribeNewsletter from 'components/SubscribeNewsletter';
 import Overlay from 'components/elements/Overlay';
 import Alert from 'components/elements/Alert';
@@ -15,8 +15,8 @@ const MainContainer = tw.main`flex flex-col items-center justify-center`;
 const HeaderContentContainer = tw.section`absolute left-1/2 bottom-0 w-full max-w-screen-md px-5 py-10 transform -translate-x-1/2 lg:-translate-y-10 2xl:-translate-y-20 flex flex-col justify-center text-white`;
 
 export default function Home() {
-  const router = useRouter();
   const ALERT_TIMEOUT = 10000;
+  const router = useRouter();
   const [isSubscribeModalOpen, setIsSubscribeModalOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState<ReactNode | null>(null);
 
@@ -91,7 +91,7 @@ export default function Home() {
       </header>
 
       <MainContainer>
-        {isSubscribeModalOpen &&
+        {isSubscribeModalOpen ?
           <Overlay className="flex flex-col justify-center">
             <Overlay.CloseButton onClick={() => setIsSubscribeModalOpen(false)}>
               <HiX className="mx-auto text-2xl" />
@@ -110,6 +110,11 @@ export default function Home() {
               }}
             />
           </Overlay>
+          : (
+            <SubscribeNewsletter.Fab onClick={() => setIsSubscribeModalOpen(true)}>
+              <HiMail className="m-auto text-3xl text-gray-900"/>
+            </SubscribeNewsletter.Fab>
+          )
         }
 
         {alertMsg &&
