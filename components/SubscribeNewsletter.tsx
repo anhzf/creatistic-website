@@ -1,5 +1,5 @@
 import subscribeNewsletterRequest from 'app/requests/subscribeNewsletterRequest';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import tw from 'twin.macro';
 import TextInput from 'components/elements/TextInput';
 import { NewsletterSubscriber } from 'types/models';
@@ -28,20 +28,26 @@ export default function SubscribeNewsletter({
   description,
   emailInputPlaceholder = 'Masukkan email kamu disini...',
   nameInputPlaceholder = 'Masukkan nama kamu disini...',
-  onNewSubscriberRegistered = () => void(0),
+  onNewSubscriberRegistered = () => void (0),
   ...props
 }: Props) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
-  const subscribeNewsletter = () => {
-    setIsProcessing(true);
-    const req = subscribeNewsletterRequest({ name, email });
-    fetch(req).then(() => {
-      setIsProcessing(false);
-      onNewSubscriberRegistered?.({ name, email });
-    });
-  };
+  const subscribeNewsletter = useCallback(
+    () => {
+      setIsProcessing(true);
+      const req = subscribeNewsletterRequest({ name, email });
+      fetch(req).then((res) => {
+        if (res.ok) onNewSubscriberRegistered?.({ name, email })
+        else res.json().then((data) => setErrorMsg(data.message));
+
+        setIsProcessing(false);
+      });
+    },
+    [name, email],
+  );
 
   return (
     <Container
@@ -76,6 +82,7 @@ export default function SubscribeNewsletter({
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
+        {errorMsg && <span className="animate__animated animate__shakeX bg-red-500 text-white text-center rounded-full">{errorMsg}</span>}
 
         <span className="text-xs text-red-600 italic">*kami berkomitmen untuk menjaga informasi yang anda masukkan ini supaya tidak disalah gunakan</span>
       </div>
@@ -88,7 +95,7 @@ export default function SubscribeNewsletter({
           isProcessing ?
             (<>
               <Loader className="animate-spin mx-2 w-6 h-6" />
-              Processing...
+              Memproses...
             </>)
             : 'Daftar!'
         }

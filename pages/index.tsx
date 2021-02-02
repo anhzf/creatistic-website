@@ -102,7 +102,11 @@ export default function Home() {
               description="Daftarkan emailmu untuk menjadi orang pertama yang mendapat info menarik dan juga info giveaway dari kita!"
               onNewSubscriberRegistered={(data) => {
                 setIsSubscribeModalOpen(false);
-                setAlertMsg(<h1 className="font-bold text-3xl text-gray-900">Terimakasih {data.name}!</h1>);
+                setAlertMsg((
+                  <h1 className="font-medium text-3xl text-gray-900">Terima kasih{' '}
+                    <span className="font-bold text-blue-500">{data.name}</span>! Ada sesuatu nunggu di email kamu nih...✨
+                  </h1>
+                ));
               }}
             />
           </Overlay>

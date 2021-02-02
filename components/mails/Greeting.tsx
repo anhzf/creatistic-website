@@ -13,16 +13,8 @@ export default function GreetingMail({ name, url }: Props) {
     <article>
       <img src={ImgUrlObj.toString()} alt="header email creatisticID"/>
       <br/>
-      <h1>Terimakasih {name} 👋</h1>
-
       <div>
-        <h2>Terimakasih {name}... telah berlangganan dan bergabung menjadi bagian dari creatistic.id.</h2>
-      </div>
-
-      <div>
-        <h2>
-          <br/>
-        </h2>
+        <h1>Terima kasih {name}... 👋 telah berlangganan dan bergabung menjadi bagian dari creatistic.id.</h1>
       </div>
 
       <div>
@@ -34,8 +26,10 @@ export default function GreetingMail({ name, url }: Props) {
         <blockquote>Creatistic.id bermanfaat bagi masyarakat.</blockquote>
         <br/>
         Tunggu informasi menarik dari kami selanjutnya ya...!
+        <br/>
         <hr/>
         Salam hangat dari <a href="https://creatistic.id/">creatistic.id</a>
+        <br/>
         <br/>
         <small>
           Merasa tidak berlangganan? silahkan hubungi kami melalui email kami ya...
