@@ -6,7 +6,7 @@ import MainLayout from 'components/layouts/MainLayout';
 import SubscribeNewsletter from 'components/SubscribeNewsletter';
 import Overlay from 'components/elements/Overlay';
 import Alert from 'components/elements/Alert';
-import Carousel from 'components/modules/Carousel';
+import Carousel from 'components/Carousel';
 
 const MainContainer = tw.main`flex flex-col items-center justify-center`;
 const ALERT_TIMEOUT = 10000;
