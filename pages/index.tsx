@@ -1,20 +1,23 @@
 import { ReactNode, useEffect, useState } from 'react';
 import tw from 'twin.macro';
 import { HiX, HiMail } from 'react-icons/hi';
+import { random } from 'faker';
+import MainLayout from 'components/layouts/MainLayout';
 import SubscribeNewsletter from 'components/SubscribeNewsletter';
 import Overlay from 'components/elements/Overlay';
 import Alert from 'components/elements/Alert';
-import MainLayout from 'components/layouts/MainLayout';
+import Carousel from 'components/modules/Carousel';
 
 const MainContainer = tw.main`flex flex-col items-center justify-center`;
 const ALERT_TIMEOUT = 10000;
+const slides = Array.from(Array(10)).map(() => ({ imgSrc: random.image() }));
 
 export default function Home() {
   const [isSubscribeModalOpen, setIsSubscribeModalOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState<ReactNode | null>(null);
 
   useEffect(() => {
-    setTimeout(setIsSubscribeModalOpen, 10000, true);
+    // setTimeout(setIsSubscribeModalOpen, 10000, true);
   }, []);
 
   useEffect(() => {
@@ -25,11 +28,14 @@ export default function Home() {
 
   return (
     <MainLayout>
-      <header className="relative h-screen w-full">
+      <header className="relative w-full px-2 py-4 flex flex-col">
+        <Carousel
+          slides={slides}
+          className="w-full h-96"
+        />
       </header>
 
-      <MainContainer>
-      </MainContainer>
+      <MainContainer />
 
       {isSubscribeModalOpen ?
         <Overlay className="flex flex-col justify-center">

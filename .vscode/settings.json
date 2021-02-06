@@ -15,5 +15,8 @@
     "tailwindCSS.includeLanguages": {
     "typescript": "javascript",
     "typescriptreact": "javascript"
-    }
+    },
+    "conventionalCommits.scopes": [
+        "ui"
+    ]
 }
