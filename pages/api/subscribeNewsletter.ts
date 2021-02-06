@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import firebase from 'firebase';
+import absoluteUrl from 'next-absolute-url';
 import fireCollection from 'app/fireCollection';
 import gmailAuth from 'config/gmailAuth';
 import { gmailTransporter } from 'app/services/nodemailerTransporter';
 import GreetingMail from 'components/mails/Greeting';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { NewsletterSubscriber } from 'types/models';
-import absoluteUrl from 'next-absolute-url';
 
 const ERROR_MSG = {
   alreadyRegistered: 'email sudah terdaftar',
@@ -55,6 +55,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       if (err instanceof Error) {
         res.status(400).json({ success: false, message: err.message });
       }
+      res.status(400).json({ success: false });
     }
   } else {
     res.status(400).json({ success: false, message: ERROR_MSG.cantHandle });
