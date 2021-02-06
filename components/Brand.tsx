@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import tw from 'twin.macro'
 
-const StyledSpan = tw.span`inline-block font-extrabold text-gray-900`
+const StyledSpan = tw.span`inline-block font-mont font-extrabold text-gray-900`
 
 const Brand = () => (
   <Link href="/">

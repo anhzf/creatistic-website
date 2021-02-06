@@ -1,8 +1,10 @@
+import Brand from 'components/Brand';
 import Head from 'next/head';
 import { useRouter } from 'next/router'
 import tw from 'twin.macro';
 
 const Container = tw.div`min-h-screen w-screen flex flex-col items-center`;
+const Nav = tw.nav`w-screen px-2 py-4 bg-white shadow-xl flex justify-center`;
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
@@ -41,6 +43,10 @@ export default function MainLayout({
         <meta name="robots" content="index, follow" />
         <meta name="google-site-verification" content="yRVHmDY9GNvr828pyT4AW_pb4NiRamy3mTdbVEucY2I" />
       </Head>
+
+      <Nav>
+        <h2 className="text-2xl"><Brand /></h2>
+      </Nav>
 
       {children}
     </Container>
