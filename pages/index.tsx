@@ -17,7 +17,7 @@ export default function Home() {
   const [alertMsg, setAlertMsg] = useState<ReactNode | null>(null);
 
   useEffect(() => {
-    // setTimeout(setIsSubscribeModalOpen, 10000, true);
+    setTimeout(setIsSubscribeModalOpen, 10000, true);
   }, []);
 
   useEffect(() => {
@@ -28,10 +28,10 @@ export default function Home() {
 
   return (
     <MainLayout>
-      <header className="relative w-full px-2 py-4 flex flex-col">
+      <header className="relative w-full px-2 sm:px-4 py-4 flex flex-col items-center">
         <Carousel
           slides={slides}
-          className="w-full h-96"
+          className="w-full max-w-screen-lg h-80 sm:h-96"
         />
       </header>
 

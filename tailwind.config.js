@@ -32,7 +32,6 @@ module.exports = {
       cursor: ['disabled'],
       opacity: ['disabled'],
       scale: ['active'],
-      transform: ['active'],
     },
   },
   plugins: [],

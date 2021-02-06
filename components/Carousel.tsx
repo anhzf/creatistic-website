@@ -5,10 +5,10 @@ import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
 
 const Container = tw.div`relative bg-gray-200 rounded-xl shadow-lg`;
 const NavBtn = styled.button(() => [
-  tw`absolute top-1/2 bottom-1/2 w-12 h-12 mx-1 bg-white rounded-full ring-gray-500 ring-opacity-70 shadow-2xl transition duration-200`,
+  tw`absolute top-1/2 bottom-1/2 w-12 h-12 mx-1 sm:mx-2 md:mx-4 bg-gray-50 rounded-full ring-gray-500 ring-opacity-70 shadow-xl transform -translate-y-1/2 transition duration-200`,
   tw`font-bold text-center text-2xl leading-none`,
   tw`flex justify-center items-center`,
-  tw`select-none overflow-hidden active:(transform scale-75) focus:(outline-none bg-gray-100 ring ring-inset)`,
+  tw`select-none overflow-hidden active:(scale-75) focus:(outline-none bg-gray-200 ring ring-inset)`,
 ]);
 
 interface SlideContainerProps {
