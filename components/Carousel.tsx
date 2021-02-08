@@ -15,9 +15,11 @@ interface SlideContainerProps {
   active?: boolean;
 }
 
-type SlideProps = React.HTMLAttributes<HTMLDivElement> & SlideContainerProps & {
+export interface Slide {
   imgSrc: string;
 }
+
+type SlideProps = React.HTMLAttributes<HTMLDivElement> & SlideContainerProps & Slide;
 
 const SlideContainer = styled.div(({ active = false }: SlideContainerProps) => [
   tw`hidden relative w-full h-full rounded-xl`,
