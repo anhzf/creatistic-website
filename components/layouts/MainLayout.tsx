@@ -3,8 +3,8 @@ import Head from 'next/head';
 import { useRouter } from 'next/router'
 import tw from 'twin.macro';
 
-const Container = tw.div`min-h-screen w-screen flex flex-col items-center`;
-const Nav = tw.nav`w-screen px-2 py-4 bg-white shadow-xl flex justify-center`;
+const Container = tw.div`min-h-screen w-screen max-w-full flex flex-col`;
+const Nav = tw.nav`w-full px-2 py-4 bg-white shadow-xl flex justify-center`;
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
@@ -25,6 +25,7 @@ export default function MainLayout({
         {/* Primary Meta Tags */}
         <title>{title}</title>
         <meta name="title" content={title} />
+        <link rel="shortcut icon" href="/assets/favicon.png" type="image/x-icon"/>
         <meta name="description" content={desc} />
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
@@ -32,7 +33,6 @@ export default function MainLayout({
         <meta property="og:description" content={desc} />
         <meta property="og:url" content={metaUrl} />
         <meta property="og:image" content="/assets/logo creatistic.png" />
-        <link rel="icon" href="/favicon.ico" />
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content={metaUrl} />
