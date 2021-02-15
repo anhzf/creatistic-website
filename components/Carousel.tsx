@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 import Image from 'next/image'
 import tw, { styled } from 'twin.macro';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
@@ -13,20 +13,23 @@ const NavBtn = styled.button(() => [
 
 interface SlideContainerProps {
   active?: boolean;
+  rounded?: boolean;
 }
 
 export interface Slide {
   imgSrc: string;
+  rounded?: boolean;
 }
 
 type SlideProps = React.HTMLAttributes<HTMLDivElement> & SlideContainerProps & Slide;
 
-const SlideContainer = styled.div(({ active = false }: SlideContainerProps) => [
+const SlideContainer = styled.div(({ active = false, rounded = false }: SlideContainerProps) => [
   tw`hidden relative w-full h-full rounded-xl`,
   active && tw`block`,
+  rounded && tw`rounded-xl`
 ]);
 
-const Slide = function ({ imgSrc, ...props }: SlideProps) {
+const Slide = function ({ imgSrc, rounded, ...props }: SlideProps) {
   return (
     <SlideContainer {...props}>
       <Image
@@ -34,33 +37,32 @@ const Slide = function ({ imgSrc, ...props }: SlideProps) {
         layout="fill"
         loading="eager"
         objectFit="cover"
-        className="rounded-xl"
+        className={rounded ? 'rounded-xl' : ''}
       />
     </SlideContainer>
   )
 }
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  slides: SlideProps[];
+  slides: Omit<SlideProps, 'rounded'>[];
+  rounded?: Slide['rounded'];
+  stateHandler?: [number, Dispatch<SetStateAction<number>>]
 }
 
 export default function Carousel({
   slides,
+  stateHandler: [value, onValueChange] = useState(0),
+  rounded = false,
   ...props
 }: Props) {
-  const [activeSlide, setActiveSlide] = useState(-1);
   const toNextSlide = useCallback(
-    () => setActiveSlide((activeSlide >= slides.length - 1) ? 0 : activeSlide + 1),
-    [activeSlide, slides],
+    () => onValueChange((value >= slides.length - 1) ? 0 : value + 1),
+    [value, slides],
   );
   const toPrevSlide = useCallback(
-    () => setActiveSlide((activeSlide <= 0) ? slides.length - 1 : activeSlide - 1),
-    [activeSlide, slides],
+    () => onValueChange((value <= 0) ? slides.length - 1 : value - 1),
+    [value, slides],
   );
-
-  useEffect(() => {
-    setTimeout(() => setActiveSlide(0), 300);
-  }, []);
 
   return (
     <Container {...props}>
@@ -68,8 +70,9 @@ export default function Carousel({
         {slides.map((e, i) => (
           <Slide
             key={i}
-            active={i === activeSlide}
+            active={i === value}
             className="animate__animated animate__zoomIn animate__faster"
+            rounded={rounded}
             {...e}
           />
         ))}
