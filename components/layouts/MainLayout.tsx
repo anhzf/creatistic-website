@@ -1,5 +1,6 @@
 import Brand from 'components/Brand';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router'
 import tw from 'twin.macro';
 
@@ -16,16 +17,20 @@ export default function MainLayout({
   title = 'Creatistic Official Website - Mengabadikan Cinta Dalam Furnitur',
   desc = 'Menjawab kebutuhan furnitur anda, menciptakan cinta dalam furnitur. Memberikan anda suatu hal yang baru intuk kemajuan negri Indonesia melalui pengembangan UKM. Creatistic.id untuk Indonesia.',
   metaUrl = useRouter().pathname,
+  className,
   children,
   ...props
 }: Props) {
+  const { basePath } = useRouter();
+
   return (
-    <Container {...props}>
+    <Container className={`dark ${className}`} {...props}>
       <Head>
         {/* Primary Meta Tags */}
         <title>{title}</title>
+        <base href={basePath} />
         <meta name="title" content={title} />
-        <link rel="shortcut icon" href="/assets/favicon.png" type="image/x-icon"/>
+        <link rel="shortcut icon" href="/assets/favicon.png" type="image/x-icon" />
         <meta name="description" content={desc} />
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
@@ -49,6 +54,42 @@ export default function MainLayout({
       </Nav>
 
       {children}
+
+      <footer className="bg-white dark:bg-gray-800 w-full py-8">
+        <div className="max-w-screen-xl mx-auto px-4">
+          <ul className="max-w-screen-md mx-auto text-lg font-light flex flex-wrap justify-between">
+            <li className="my-2">
+              <a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" href="#">
+                About
+              </a>
+            </li>
+            <li className="my-2">
+              <a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" href="#">
+                Products
+              </a>
+            </li>
+            <li className="my-2">
+              <a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" href="#">
+                Instagram
+              </a>
+            </li>
+            <li className="my-2">
+              <a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" href="#">
+                TikTok
+              </a>
+            </li>
+            <li className="my-2">
+              <a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" href="#">
+                Facebook
+              </a>
+            </li>
+          </ul>
+
+          <div className="text-center text-gray-500 dark:text-gray-200 pt-10 sm:pt-12 font-light flex items-center justify-center">
+            <span>Copyright &copy; 2021 All rights reserved | <Link href="/">Creatistic.id</Link></span>
+          </div>
+        </div>
+      </footer>
     </Container>
   )
 }

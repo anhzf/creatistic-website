@@ -1,20 +1,27 @@
 import { ReactNode, useEffect, useState } from 'react';
 import tw from 'twin.macro';
 import { HiX, HiMail } from 'react-icons/hi';
-import { random } from 'faker';
 import MainLayout from 'components/layouts/MainLayout';
 import SubscribeNewsletter from 'components/SubscribeNewsletter';
 import Overlay from 'components/elements/Overlay';
 import Alert from 'components/elements/Alert';
-import Carousel from 'components/Carousel';
+import Carousel, { Slide } from 'components/Carousel';
+import getSlides from 'app/apis/getSlides';
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
 const MainContainer = tw.main`flex flex-col items-center justify-center`;
 const ALERT_TIMEOUT = 10000;
-const slides = Array.from(Array(10)).map(() => ({ imgSrc: random.image() }));
 
-export default function Home() {
+export const getServerSideProps: GetServerSideProps = async () => ({
+  props: {
+    slideImages: getSlides(),
+  },
+});
+
+export default function Home({ slideImages }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [isSubscribeModalOpen, setIsSubscribeModalOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState<ReactNode | null>(null);
+  const [slides] = useState<Slide[]>(slideImages);
 
   useEffect(() => {
     setTimeout(setIsSubscribeModalOpen, 10000, true);
@@ -31,6 +38,7 @@ export default function Home() {
       <header className="relative w-full px-2 sm:px-4 py-4 flex flex-col items-center">
         <Carousel
           slides={slides}
+          rounded
           className="w-full max-w-screen-lg h-80 sm:h-96"
         />
       </header>

@@ -1,10 +1,10 @@
+import { image } from 'faker';
 import type { Slide } from 'components/Carousel';
-import { random } from 'faker';
 
 const slides: Slide[] = [];
 
-export default function getSlides() {
+export default function getSlides(...imgOptions: Parameters<typeof image['imageUrl']>) {
   slides.slice(slides.length);
-  slides.push(...Array.from(Array(10), () => ({ imgSrc: random.image() })));
+  slides.push(...Array.from(Array(10), () => ({ imgSrc: image.imageUrl(...imgOptions) })));
   return slides;
 }

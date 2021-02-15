@@ -12,7 +12,7 @@ module.exports = {
     './pages/**/*.tsx',
     './components/**/*.tsx',
   ],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {
       colors: {
@@ -28,11 +28,14 @@ module.exports = {
   },
   variants: {
     extend: {
+      backgroundColor: ['even', 'odd'],
       borderRadius: ['first', 'last'],
       cursor: ['disabled'],
       opacity: ['disabled'],
       scale: ['active'],
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+  ],
 }
