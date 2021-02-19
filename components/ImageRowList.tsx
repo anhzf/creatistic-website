@@ -8,7 +8,7 @@ interface ItemProps {
 }
 
 const Item = styled.div(({ isActive, noState = false }: ItemProps) => [
-  tw`flex flex-col justify-center items-center transition-transform`,
+  tw`cursor-pointer flex flex-col justify-center items-center transition-transform`,
   isActive ? tw`ring ring-gray-800 ring-offset-2 ring-offset-white transform scale-90` : (!noState && tw`opacity-80`),
 ]);
 

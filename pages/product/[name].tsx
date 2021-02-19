@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
-import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import tw, { styled } from 'twin.macro';
 import { HiStar, HiShoppingCart } from 'react-icons/hi';
 import getSlides from 'app/apis/getSlides';
 import MainLayout from 'components/layouts/MainLayout';
 import Carousel, { Slide } from 'components/Carousel'
 import ImageRowList from 'components/ImageRowList';
 import List from 'components/List';
+import tw from 'twin.macro';
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
 interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   title: string;
@@ -90,7 +90,7 @@ export default function Product({ productName, slideImages }: InferGetServerSide
 
               <List.Item>
                 <List.DT>Varian</List.DT>
-                <List.DD tw="flex flex-row gap-2">
+                <List.DD css={[tw`flex flex-row gap-2`]}>
                   <div className="w-8 h-8 bg-blue-500 rounded-full ring-2 ring-gray-700 ring-offset-2 ring-offset-white" />
                   <div className="w-8 h-8 bg-yellow-800 rounded-full" />
                   <div className="w-8 h-8 bg-pink-500 rounded-full" />
@@ -108,7 +108,7 @@ export default function Product({ productName, slideImages }: InferGetServerSide
 
               <List.Item>
                 <List.DT>Rating</List.DT>
-                <List.DD tw="flex items-center gap-x-1">
+                <List.DD css={[tw`flex items-center gap-x-1`]}>
                   <HiStar className="text-yellow-400" />
                   <HiStar className="text-yellow-400" />
                   <HiStar className="text-yellow-400" />
@@ -138,7 +138,7 @@ export default function Product({ productName, slideImages }: InferGetServerSide
                   />
 
                   <span className="self-start max-w-full px-3 py-1 text-sm text-gray-700 truncate">
-                    <Link href="#">Dsadas das das ddasdsasddadasda</Link>
+                    <Link href="/">Dsadas das das ddasdsasddadasda</Link>
                   </span>
                 </ImageRowList.Item>
               ))}
