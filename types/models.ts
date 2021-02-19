@@ -6,9 +6,31 @@ export interface FireModelTimestamp {
   _deleted: firebase.firestore.Timestamp | null;
 }
 
+export type ModelUI<T> = Record<string, unknown> & Partial<T>;
+
 export interface NewsletterSubscriber {
   name: string;
   email: string;
+}
+
+export interface PriceDiscount {
+  value: number;
+  percent?: number;
+}
+
+export interface Product {
+  name: string;
+  price: number;
+  images: string[];
+  description: string;
+  link: string;
+  category: string;
+  specs: Record<string, string>;
+  discount?: PriceDiscount;
+  _ui: ModelUI<{
+    rating: number;
+    sold: number;
+  }>;
 }
 
 export type FireModel<T> = T & FireModelTimestamp;

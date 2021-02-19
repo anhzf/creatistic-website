@@ -24,6 +24,7 @@
     "react-dom": "17.0.1",
     "react-firebase-hooks": "^2.2.0",
     "react-icons": "^4.1.0",
+    "slugify": "^1.4.6",
     "styled-components": "^5.2.1",
     "tailwindcss": "^2.0.2",
     "twin.macro": "^2.1.0"

@@ -1,7 +1,7 @@
 import Brand from 'components/Brand';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import tw from 'twin.macro';
 
 const Container = tw.div`min-h-screen w-screen max-w-full flex flex-col`;
@@ -55,7 +55,7 @@ export default function MainLayout({
 
       {children}
 
-      <footer className="bg-white dark:bg-gray-800 w-full py-8">
+      <footer className="justify-self-end mt-auto bg-white dark:bg-gray-800 w-full py-8">
         <div className="max-w-screen-xl mx-auto px-4">
           <ul className="max-w-screen-md mx-auto text-lg font-light flex flex-wrap justify-between">
             <li className="my-2">

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import Image from 'next/image'
 import tw, { styled } from 'twin.macro';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
