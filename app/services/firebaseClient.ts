@@ -1,7 +1,8 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
-import { emulators } from "firebase.json";
+import 'firebase/storage';
+// import { emulators } from "firebase.json";
 import firebaseConfig from 'config/firebaseConfig';
 
 
@@ -11,6 +12,7 @@ else firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
 const auth = firebase.auth();
+const storage = firebase.storage();
 
 if (process.env.NODE_ENV === 'development') {
   const DEV_HOST = 'localhost';
@@ -25,5 +27,5 @@ if (process.env.NODE_ENV === 'development') {
 export default firebase;
 
 export const fbs = {
-  auth, db,
+  auth, db, storage,
 } as const;

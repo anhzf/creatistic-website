@@ -17,6 +17,7 @@
     "typescriptreact": "javascript"
     },
     "conventionalCommits.scopes": [
-        "ui"
+        "ui",
+        "page"
     ]
 }

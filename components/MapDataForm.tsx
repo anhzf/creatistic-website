@@ -24,7 +24,7 @@ export default function MapDataForm({ dataHandler: [dataSet, setDataSet] }: Prop
       value: '',
     }]),
     [dataSet],
-  )
+  );
   const setData = useCallback(
     (index: number, val: MapData | ((v: MapData) => MapData)) => setDataSet(dataSet
       .map((data, i) => (i === index)
@@ -35,7 +35,7 @@ export default function MapDataForm({ dataHandler: [dataSet, setDataSet] }: Prop
   const popData = useCallback(
     () => setDataSet(dataSet.splice(0, dataSet.length - 1)),
     [dataSet],
-  )
+  );
 
   return (
     <List>
@@ -63,3 +63,10 @@ export default function MapDataForm({ dataHandler: [dataSet, setDataSet] }: Prop
     </List>
   )
 }
+
+export const MapDataListToObject = function (mapDataList: MapData[]) {
+  return mapDataList.reduce((acc, mapData) => ({
+    ...acc,
+    [mapData.key]: mapData.value,
+  }), {});
+};
