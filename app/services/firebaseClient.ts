@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import 'firebase/storage';
-// import { emulators } from "firebase.json";
+import { emulators } from "firebase.json";
 import firebaseConfig from 'config/firebaseConfig';
 
 
