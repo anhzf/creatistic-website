@@ -18,7 +18,6 @@ function AddProductForm({ onSubmit }: Props) {
   const [product, setProduct] = useState<Product>({
     name: '',
     price: 0,
-    images: [],
     description: '',
     link: '',
     category: '',
