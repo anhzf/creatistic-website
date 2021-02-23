@@ -50,14 +50,12 @@ function AddProductForm({ onSubmit }: Props) {
 
       ref.set({
         ...product,
+        price: Number(product.price),
         _created: firebase.firestore.Timestamp.now(),
         _updated: firebase.firestore.Timestamp.now(),
         _deleted: null,
       })
-        .then((i) => {
-          console.log(i);
-          onSubmit(product);
-        });
+        .then(() => onSubmit(product));
     }}>
       <fieldset>
         <legend>Tambah Produk</legend>

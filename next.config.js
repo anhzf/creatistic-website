@@ -12,6 +12,7 @@ module.exports = {
     domains: [
       'picsum.photos',
       'placeimg.com',
+      'firebasestorage.googleapis.com',
     ],
   },
 };

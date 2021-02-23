@@ -21,7 +21,6 @@ export interface PriceDiscount {
 export interface Product {
   name: string;
   price: number;
-  images: string[];
   description: string;
   link: string;
   category: string;
@@ -29,6 +28,7 @@ export interface Product {
   discount?: PriceDiscount;
   _ui: ModelUI<{
     rating: number;
+    reviews: number;
     sold: number;
   }>;
 }

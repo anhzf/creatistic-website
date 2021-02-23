@@ -24,7 +24,7 @@ const IMAGE_TYPES = [
 ];
 
 export interface UploaderRef {
-  upload: () => Promise<void>;
+  upload: () => Promise<fb.storage.UploadTaskSnapshot[]>;
 }
 
 const Uploader = React.forwardRef<UploaderRef, Props>(({
@@ -54,8 +54,7 @@ const Uploader = React.forwardRef<UploaderRef, Props>(({
     [val],
   );
   const upload = function () {
-    return Promise.all(val.map(i => storageRef.child(i.name).put(i)))
-      .then(snapshots => snapshots.forEach(snapshot => console.log(`${snapshot.ref} uploaded!`)));
+    return Promise.all(val.map(i => storageRef.child(i.name).put(i)));
   };
   useImperativeHandle(ref, () => ({ upload }), [storageRef]);
 
