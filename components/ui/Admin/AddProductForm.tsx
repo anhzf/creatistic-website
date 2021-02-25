@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, ChangeEvent, useEffect, useRef } from 'react';
+import React, { useState, useMemo, ChangeEvent, useEffect, useRef } from 'react';
 import slugify from 'slugify';
 import firebase from 'firebase/app';
 import fireStorage from 'app/fireStorage';
@@ -7,6 +7,7 @@ import TextInput from 'components/elements/TextInput';
 import MapDataForm, { MapData, MapDataListToObject } from 'components/MapDataForm';
 import Uploader, { UploaderRef } from 'components/Uploader';
 import Button from 'components/elements/Button';
+import useMappedState from 'hooks/useMappedState';
 import type { Product } from 'types/models';
 
 type Props = JSX.IntrinsicElements['input'] & {
@@ -15,27 +16,22 @@ type Props = JSX.IntrinsicElements['input'] & {
 
 function AddProductForm({ onSubmit }: Props) {
   const ref = useMemo(() => fireCollection.product.doc(), []);
-  const [product, setProduct] = useState<Product>({
-    name: '',
-    price: 0,
-    description: '',
-    link: '',
-    category: '',
-    specs: {},
-    _ui: {},
-  });
+  const [product, setProduct, set] = useMappedState<Product, [ChangeEvent<HTMLInputElement>]>(
+    {
+      name: '',
+      price: 0,
+      description: '',
+      link: '',
+      category: '',
+      specs: {},
+      _ui: {},
+    },
+    propSetter =>
+      e => propSetter(e.target.value)
+  );
   const [specs, setSpecs] = useState<MapData[]>([]);
   const productLink = useMemo(() => (product.link || slugify(product.name)).toLowerCase(), [product]);
   const uploaderRef = useRef<UploaderRef>(null);
-  const set = useCallback(
-    (keyName: keyof Product) => useMemo(
-      () => (e: ChangeEvent<HTMLInputElement>) => setProduct({
-        ...product,
-        [keyName]: e.target.value,
-      }),
-      [product]),
-    [product],
-  );
 
   useEffect(() => setProduct({
     ...product,
