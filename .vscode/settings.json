@@ -18,6 +18,8 @@
     },
     "conventionalCommits.scopes": [
         "ui",
-        "page"
+        "page",
+        "hooks",
+        "api",
     ]
 }
