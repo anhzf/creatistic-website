@@ -1,6 +1,7 @@
+import { HTMLAttributes } from 'react';
 import tw from 'twin.macro';
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
+interface Props extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Container = tw.div`bg-white w-full max-w-2xl shadow overflow-hidden rounded-lg`;

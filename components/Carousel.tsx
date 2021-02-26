@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import { Dispatch, HTMLAttributes, SetStateAction, useCallback, useState } from 'react';
 import Image from 'next/image'
 import tw, { styled } from 'twin.macro';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
@@ -21,7 +21,7 @@ export interface Slide {
   rounded?: boolean;
 }
 
-type SlideProps = React.HTMLAttributes<HTMLDivElement> & SlideContainerProps & Slide;
+type SlideProps = HTMLAttributes<HTMLDivElement> & SlideContainerProps & Slide;
 
 const SlideContainer = styled.div(({ active = false, rounded = false }: SlideContainerProps) => [
   tw`hidden relative w-full h-full rounded-xl`,
@@ -43,7 +43,7 @@ const Slide = function ({ imgSrc, rounded, ...props }: SlideProps) {
   )
 }
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
+interface Props extends HTMLAttributes<HTMLDivElement> {
   slides: Omit<SlideProps, 'rounded'>[];
   rounded?: Slide['rounded'];
   stateHandler?: [number, Dispatch<SetStateAction<number>>]

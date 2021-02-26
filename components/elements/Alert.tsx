@@ -1,9 +1,9 @@
-import { createRef, useEffect } from 'react';
+import { createRef, HTMLAttributes, useEffect } from 'react';
 import tw from 'twin.macro';
 
 const Container = tw.div`fixed bottom-0 left-0 w-full p-6 bg-white`;
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
+interface Props extends HTMLAttributes<HTMLDivElement> {
   timeout?: number;
 }
 

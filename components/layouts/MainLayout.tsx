@@ -1,13 +1,14 @@
-import Brand from 'components/Brand';
+import { HTMLAttributes } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Brand from 'components/Brand';
 import tw from 'twin.macro';
 
 const Container = tw.div`min-h-screen w-screen max-w-full flex flex-col`;
 const Nav = tw.nav`w-full px-2 py-4 bg-white shadow-xl flex justify-center`;
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
+interface Props extends HTMLAttributes<HTMLDivElement> {
   title?: string;
   desc?: string;
   metaUrl?: string;

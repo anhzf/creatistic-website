@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { HTMLAttributes, useEffect, useState } from 'react';
 import Image from 'next/image';
 import tw, { styled } from 'twin.macro';
 import { HiStar } from 'react-icons/hi';
 import { ImWhatsapp } from 'react-icons/im';
-import fireCollection from 'app/fireCollection';
 import fireStorage from 'app/fireStorage';
 import { docToServerProps, IDocToServerProps } from 'app/utils/firebase';
 import { getProductByLink } from 'app/apis/getProduct';
@@ -17,7 +16,7 @@ import useFireStorageFileList from 'hooks/useFireStorageFileList';
 import { Order, Product as IProduct } from 'types/models';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
-interface SectionProps extends React.HTMLAttributes<HTMLElement> {
+interface SectionProps extends HTMLAttributes<HTMLElement> {
   title: string;
 }
 
