@@ -60,27 +60,47 @@ export default function MainLayout({
         <div className="max-w-screen-xl mx-auto px-4">
           <ul className="max-w-screen-md mx-auto text-lg font-light flex flex-wrap justify-between">
             <li className="my-2">
-              <a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" href="#">
+              <a
+                href="#"
+                target="_blank"
+                className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
+              >
                 About
               </a>
             </li>
             <li className="my-2">
-              <a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" href="#">
+              <a
+                href="#"
+                target="_blank"
+                className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
+              >
                 Products
               </a>
             </li>
             <li className="my-2">
-              <a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" href="#">
+              <a
+                href="https://www.instagram.com/creatistic.id/"
+                target="_blank"
+                className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
+              >
                 Instagram
               </a>
             </li>
             <li className="my-2">
-              <a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" href="#">
+              <a
+                href="https://www.tiktok.com/@creatistic.id"
+                target="_blank"
+                className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
+              >
                 TikTok
               </a>
             </li>
             <li className="my-2">
-              <a className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200" href="#">
+              <a
+                href="#"
+                target="_blank"
+                className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
+              >
                 Facebook
               </a>
             </li>

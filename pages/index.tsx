@@ -1,15 +1,17 @@
-import { ReactNode, useEffect, useState } from 'react';
-import tw from 'twin.macro';
+import React, { ReactNode, useEffect, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { HiX, HiMail } from 'react-icons/hi';
+import getSlides from 'app/apis/getSlides';
 import MainLayout from 'components/layouts/MainLayout';
+import HighlightedProduct from 'components/ui/Index/HighlightedProduct';
 import SubscribeNewsletter from 'components/SubscribeNewsletter';
 import Overlay from 'components/elements/Overlay';
 import Alert from 'components/elements/Alert';
 import Carousel, { Slide } from 'components/Carousel';
-import getSlides from 'app/apis/getSlides';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import 'twin.macro';
 
-const MainContainer = tw.main`flex flex-col items-center justify-center`;
 const ALERT_TIMEOUT = 10000;
 
 export const getServerSideProps: GetServerSideProps = async () => ({
@@ -24,7 +26,7 @@ export default function Home({ slideImages }: InferGetServerSidePropsType<typeof
   const [slides] = useState<Slide[]>(slideImages);
 
   useEffect(() => {
-    setTimeout(setIsSubscribeModalOpen, 10000, true);
+    // setTimeout(setIsSubscribeModalOpen, 10000, true);
   }, []);
 
   useEffect(() => {
@@ -34,7 +36,7 @@ export default function Home({ slideImages }: InferGetServerSidePropsType<typeof
   }, [alertMsg])
 
   return (
-    <MainLayout>
+    <MainLayout className="items-center">
       <header className="relative w-full px-2 sm:px-4 py-4 flex flex-col items-center">
         <Carousel
           slides={slides}
@@ -43,7 +45,88 @@ export default function Home({ slideImages }: InferGetServerSidePropsType<typeof
         />
       </header>
 
-      <MainContainer />
+      <main tw="w-full max-w-screen-lg py-8 flex flex-col justify-center items-center gap-y-5">
+        <HighlightedProduct>
+          <HighlightedProduct.ImageContainer>
+            <Image
+              src="/assets/index/M4.png"
+              layout="fill"
+              objectFit="cover"
+            />
+          </HighlightedProduct.ImageContainer>
+
+          <HighlightedProduct.Caption>
+            <HighlightedProduct.CaptionTitle>
+              Ministic
+            </HighlightedProduct.CaptionTitle>
+
+            <HighlightedProduct.CaptionSubtitle>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error, quaerat.
+            </HighlightedProduct.CaptionSubtitle>
+
+            <Link href="/product/ministic">
+              <HighlightedProduct.ActionBtn>
+                Lihat detail
+              </HighlightedProduct.ActionBtn>
+            </Link>
+
+          </HighlightedProduct.Caption>
+        </HighlightedProduct>
+
+        <HighlightedProduct>
+          <HighlightedProduct.ImageContainer>
+            <Image
+              src="/assets/index/M4.png"
+              layout="fill"
+              objectFit="cover"
+            />
+          </HighlightedProduct.ImageContainer>
+
+          <HighlightedProduct.Caption tw="right-0 items-end text-right">
+            <HighlightedProduct.CaptionTitle>
+              Ministic
+            </HighlightedProduct.CaptionTitle>
+
+            <HighlightedProduct.CaptionSubtitle>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error, quaerat.
+            </HighlightedProduct.CaptionSubtitle>
+
+            <Link href="/product/ministic">
+              <HighlightedProduct.ActionBtn>
+                Lihat detail
+              </HighlightedProduct.ActionBtn>
+            </Link>
+
+          </HighlightedProduct.Caption>
+        </HighlightedProduct>
+
+        <HighlightedProduct>
+          <HighlightedProduct.ImageContainer>
+            <Image
+              src="/assets/index/M4.png"
+              layout="fill"
+              objectFit="cover"
+            />
+          </HighlightedProduct.ImageContainer>
+
+          <HighlightedProduct.Caption>
+            <HighlightedProduct.CaptionTitle>
+              Ministic
+            </HighlightedProduct.CaptionTitle>
+
+            <HighlightedProduct.CaptionSubtitle>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error, quaerat.
+            </HighlightedProduct.CaptionSubtitle>
+
+            <Link href="/product/ministic">
+              <HighlightedProduct.ActionBtn>
+                Lihat detail
+              </HighlightedProduct.ActionBtn>
+            </Link>
+
+          </HighlightedProduct.Caption>
+        </HighlightedProduct>
+      </main>
 
       {isSubscribeModalOpen ?
         <Overlay className="flex flex-col justify-center">
