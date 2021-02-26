@@ -19,6 +19,7 @@ interface SlideContainerProps {
 export interface Slide {
   imgSrc: string;
   rounded?: boolean;
+  objectFit?: Parameters<typeof Image>[0]['objectFit'];
 }
 
 type SlideProps = HTMLAttributes<HTMLDivElement> & SlideContainerProps & Slide;
@@ -29,19 +30,22 @@ const SlideContainer = styled.div(({ active = false, rounded = false }: SlideCon
   rounded && tw`rounded-xl`
 ]);
 
-const Slide = function ({ imgSrc, rounded, ...props }: SlideProps) {
-  return (
-    <SlideContainer {...props}>
-      <Image
-        src={imgSrc}
-        layout="fill"
-        loading="eager"
-        objectFit="cover"
-        className={rounded ? 'rounded-xl' : ''}
-      />
-    </SlideContainer>
-  )
-}
+const Slide = ({
+  imgSrc,
+  rounded,
+  objectFit,
+  ...props
+}: SlideProps) => (
+  <SlideContainer {...props}>
+    <Image
+      src={imgSrc}
+      layout="fill"
+      loading="eager"
+      objectFit={objectFit || 'cover'}
+      className={rounded ? 'rounded-xl' : ''}
+    />
+  </SlideContainer>
+);
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   slides: Omit<SlideProps, 'rounded'>[];

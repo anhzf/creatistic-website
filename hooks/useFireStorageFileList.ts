@@ -15,17 +15,16 @@ export default function useFireStorageFileList(listRef: fb.storage.Reference) {
     setLoading(true);
     (async () => {
       const { items } = await listRef.listAll();
+      console.log(items);
 
-      Promise.all(
+      setList(await Promise.all(
         items.map(async (item) => ({
           url: await item.getDownloadURL(),
           metadata: await item.getMetadata(),
           fullPath: item.fullPath,
         })),
-      ).then((items) => {
-        setLoading(false);
-        setList(items);
-      });
+      ));
+      setLoading(false);
     })();
   }, []);
 

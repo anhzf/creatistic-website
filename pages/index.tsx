@@ -1,32 +1,33 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useMemo, useState } from 'react';
+import 'twin.macro';
 import Image from 'next/image';
 import Link from 'next/link';
 import { HiX, HiMail } from 'react-icons/hi';
-import getSlides from 'app/apis/getSlides';
+import fireStorage from 'app/fireStorage';
 import MainLayout from 'components/layouts/MainLayout';
 import HighlightedProduct from 'components/ui/Index/HighlightedProduct';
 import SubscribeNewsletter from 'components/SubscribeNewsletter';
 import Overlay from 'components/elements/Overlay';
 import Alert from 'components/elements/Alert';
 import Carousel, { Slide } from 'components/Carousel';
-import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import 'twin.macro';
+import useFireStorageFileList from 'hooks/useFireStorageFileList';
 
 const ALERT_TIMEOUT = 10000;
 
-export const getServerSideProps: GetServerSideProps = async () => ({
-  props: {
-    slideImages: getSlides(),
-  },
-});
-
-export default function Home({ slideImages }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Home() {
   const [isSubscribeModalOpen, setIsSubscribeModalOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState<ReactNode | null>(null);
-  const [slides] = useState<Slide[]>(slideImages);
+  const [homeCarouselMedia] = useFireStorageFileList(fireStorage.homeCarousel);
+  const slides = useMemo(
+    () => homeCarouselMedia.map(media => ({
+      imgSrc: media.url,
+      objectFit: media.metadata.customMetadata?.objectFit,
+    } as Slide)),
+    [homeCarouselMedia],
+  );
 
   useEffect(() => {
-    // setTimeout(setIsSubscribeModalOpen, 10000, true);
+    setTimeout(setIsSubscribeModalOpen, 10000, true);
   }, []);
 
   useEffect(() => {
@@ -64,7 +65,7 @@ export default function Home({ slideImages }: InferGetServerSidePropsType<typeof
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error, quaerat.
             </HighlightedProduct.CaptionSubtitle>
 
-            <Link href="/product/ministic">
+            <Link href="/product/ministic" shallow>
               <HighlightedProduct.ActionBtn>
                 Lihat detail
               </HighlightedProduct.ActionBtn>
@@ -91,7 +92,7 @@ export default function Home({ slideImages }: InferGetServerSidePropsType<typeof
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur esse cum provident aliquam inventore, quam tempora rem molestias velit accusamus temporibus consectetur vero blanditiis natus, repellat animi neque soluta reprehenderit? Consequuntur esse aut veritatis deleniti. Voluptatum, iure esse! Saepe, quibusdam cumque sapiente est perspiciatis nisi minus sunt recusandae voluptatum sit necessitatibus consectetur modi tenetur fugit laborum pariatur vel commodi fuga natus enim molestias. Numquam ipsam corrupti totam sunt rerum ratione iusto, maiores consectetur beatae eos assumenda sequi quia nesciunt illum, atque excepturi labore cupiditate pariatur doloribus natus dolorum repudiandae nisi ut tenetur. Eaque repellat nihil quo! Facere at sint consequatur!
             </HighlightedProduct.CaptionSubtitle>
 
-            <Link href="/product/ministic">
+            <Link href="/product/ministic" shallow>
               <HighlightedProduct.ActionBtn>
                 Lihat detail
               </HighlightedProduct.ActionBtn>
@@ -118,7 +119,7 @@ export default function Home({ slideImages }: InferGetServerSidePropsType<typeof
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error, quaerat.
             </HighlightedProduct.CaptionSubtitle>
 
-            <Link href="/product/ministic">
+            <Link href="/product/ministic" shallow>
               <HighlightedProduct.ActionBtn>
                 Lihat detail
               </HighlightedProduct.ActionBtn>
