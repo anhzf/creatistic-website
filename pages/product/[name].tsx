@@ -1,4 +1,4 @@
-import { HTMLAttributes, useEffect, useState } from 'react';
+import { HTMLAttributes, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import tw, { styled } from 'twin.macro';
 import { HiStar } from 'react-icons/hi';
@@ -83,6 +83,15 @@ export default function Product({ product }: InferGetServerSidePropsType<typeof 
       productName: product.name,
     },
   });
+  const productVariants = useMemo(
+    () => productMedia.reduce(
+      (acc, { metadata: { customMetadata } }) => customMetadata?.variantName
+        ? [...acc, customMetadata.variantName]
+        : acc,
+      [] as string[],
+    ),
+    [productMedia]
+  );
 
   useEffect(() => setSlides(productMedia.map(media => ({
     imgSrc: media.url,
@@ -112,7 +121,7 @@ export default function Product({ product }: InferGetServerSidePropsType<typeof 
                 objectFit="cover"
               />
 
-              {e.metadata.customMetadata.variantName && (
+              {e.metadata.customMetadata?.variantName && (
                 <VariantChip
                   flat
                   dense
@@ -149,15 +158,18 @@ export default function Product({ product }: InferGetServerSidePropsType<typeof 
               <List.Item>
                 <List.DT>Varian</List.DT>
                 <List.DD css={[tw`flex flex-row gap-2`]}>
-                  {productMedia.map((e, i) => e.metadata.customMetadata.variantName && (
-                    <VariantChip
-                      key={i}
-                      flat
-                      dense
-                    >
-                      {e.metadata.customMetadata.variantName}
-                    </VariantChip>
-                  ))}
+                  {productVariants.length
+                    ? productVariants.map((e, i) => (
+                      <VariantChip
+                        key={i}
+                        flat
+                        dense
+                      >
+                        {e}
+                      </VariantChip>
+                    ))
+                    : <span className="text-gray-400">tidak ada varian untuk produk ini 🙏</span>
+                  }
                 </List.DD>
               </List.Item>
             </List>

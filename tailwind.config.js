@@ -32,7 +32,7 @@ module.exports = {
       borderRadius: ['first', 'last'],
       cursor: ['disabled'],
       opacity: ['disabled'],
-      scale: ['active'],
+      scale: ['active', 'group-hover'],
     },
   },
   plugins: [
