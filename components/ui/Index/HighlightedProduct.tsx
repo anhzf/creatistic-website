@@ -1,14 +1,14 @@
 import tw from 'twin.macro';
 
-const HighlightedProduct = tw.div`relative w-full`;
+const HighlightedProduct = tw.div`relative overflow-hidden w-full`;
 
-const ImageContainer = tw.div`w-full h-80`;
+const ImageContainer = tw.div`w-full h-80 transform transition-transform group-hover:scale-110`;
 
 const Caption = tw.div`absolute top-0 mx-4 sm:mx-10 my-6 flex flex-col items-baseline`;
 
-const CaptionTitle = tw.h3`mt-4 font-mont text-5xl text-white lowercase`;
+const CaptionTitle = tw.h3`mt-4 font-mont text-5xl text-white line-clamp-1 lowercase`;
 
-const CaptionSubtitle = tw.p`w-full max-w-lg my-1 font-medium text-white`;
+const CaptionSubtitle = tw.p`w-full max-w-lg my-1 font-medium text-white line-clamp-2`;
 
 const ActionBtn = tw.a`inline-block cursor-pointer mt-3 px-4 py-2 bg-white font-semibold text-sm text-blue-500 capitalize rounded-lg shadow hover:bg-gray-100 focus:outline-none focus:bg-gray-300`;
 
