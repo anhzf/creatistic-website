@@ -81,6 +81,7 @@ export default function Carousel({
       <NavBtn className="left-0" onClick={toPrevSlide}>
         <HiChevronLeft />
       </NavBtn>
+
       <NavBtn className="right-0" onClick={toNextSlide}>
         <HiChevronRight />
       </NavBtn>

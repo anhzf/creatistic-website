@@ -1,19 +1,20 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
-// import Link from 'next/link';
 import tw, { styled } from 'twin.macro';
 import { HiStar } from 'react-icons/hi';
 import { ImWhatsapp } from 'react-icons/im';
+import fireCollection from 'app/fireCollection';
 import fireStorage from 'app/fireStorage';
 import { docToServerProps, IDocToServerProps } from 'app/utils/firebase';
 import { getProductByLink } from 'app/apis/getProduct';
 import MainLayout from 'components/layouts/MainLayout';
+import OrderFormPopup from 'components/ui/Product/OrderFormPopup';
 import Carousel, { Slide } from 'components/Carousel'
 import ImageRowList from 'components/ImageRowList';
 import List from 'components/List';
 import Chip from 'components/elements/Chip';
 import useFireStorageFileList from 'hooks/useFireStorageFileList';
-import type { Product as IProduct } from 'types/models';
+import { Order, Product as IProduct } from 'types/models';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
 interface SectionProps extends React.HTMLAttributes<HTMLElement> {
@@ -28,7 +29,7 @@ const Section = ({ title, children, ...props }: SectionProps) => (
 );
 
 const VariantChip = styled(Chip)<{ isActive?: boolean }>(({ isActive }) => [
-  tw`bg-gray-100 text-gray-400`,
+  tw`cursor-pointer bg-blue-100 text-blue-400`,
   isActive && tw`bg-blue-100 text-blue-500 ring-2 ring-inset ring-blue-300`,
 ]);
 
@@ -64,22 +65,32 @@ export default function Product({ product }: InferGetServerSidePropsType<typeof 
   const [slideCursor, setSlideCursor] = useState(0);
   const [productMedia] = useFireStorageFileList(fireStorage.product.child(product.uid));
   const [slides, setSlides] = useState<Slide[]>([]);
-  const orderNow = useCallback(
-    () => {
-      const waApiUrl = new URL('http://wa.me/6282224054950');
-      waApiUrl.searchParams.append('text', `Halo min, saya pesan ${product.name}#${product.uid}!`);
-
-      window.open(waApiUrl.toString());
+  const [orderFormOpen, setOrderFormOpen] = useState(true);
+  const [orderForm, setOrderForm] = useState<Order>({
+    ordererName: '',
+    productId: product.uid,
+    amount: 1,
+    contactPerson: '',
+    notes: '',
+    shippingAddress: {
+      country: 'Indonesia',
+      province: 'Jawa Tengah',
+      city: 'Surakarta',
+      district: '',
+      village: '',
+      streetName: '',
     },
-    [product],
-  )
+    _ui: {
+      productName: product.name,
+    },
+  });
 
   useEffect(() => setSlides(productMedia.map(media => ({
     imgSrc: media.url,
   }))), [productMedia]);
 
   return (
-    <MainLayout className="items-center">
+    <MainLayout className="bg-gray-100 items-center">
       <header className="relative w-full max-w-screen-lg py-4 flex flex-col">
         <Carousel
           slides={slides}
@@ -116,11 +127,11 @@ export default function Product({ product }: InferGetServerSidePropsType<typeof 
         </ImageRowList>
       </header>
 
-      <div className="w-full max-w-screen-lg sm:p-6 sm:border-t border-gray-100 sm:rounded-md sm:shadow-md flex flex-col">
+      <div className="w-full max-w-screen-lg sm:p-6 bg-white sm:border-t border-gray-100 sm:rounded-md sm:shadow-md flex flex-col">
         <main className="px-4 pt-1 pb-16 w-full grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="w-full sm:col-span-2">
             <h1 className="line-clamp-2 font-bold text-2xl capitalize">{product.name}</h1>
-            <h2 className="font-bold text-lg text-blue-500">Rp {product.price}</h2>
+            <h2 className="font-bold text-lg text-blue-500">{product.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</h2>
 
             <hr className="mt-4 h-1 bg-gray-900 bg-opacity-90 rounded-3xl" />
           </div>
@@ -203,17 +214,25 @@ export default function Product({ product }: InferGetServerSidePropsType<typeof 
         </main>
 
         <div className="sticky bottom-0 w-full px-6 bg-gradient-to-b from-gray-50 via-white to-gray-50 flex flex-col items-center">
-          <nav className="max-w-5xl w-full py-2 border-t border-gray-300 grid grid-cols-3">
+          <nav className="relative max-w-5xl w-full py-2 border-t border-gray-300 grid grid-cols-3">
             <button
               className="py-2 font-semibold text-white bg-green-400 rounded-lg flex flex-nowrap justify-center items-center col-start-2 col-span-2"
-              onClick={orderNow}
+              onClick={() => setOrderFormOpen(!orderFormOpen)}
             >
               <ImWhatsapp className="mr-4" />
               <span>Pesan sekarang</span>
             </button>
           </nav>
+
+          <OrderFormPopup
+            isOpen={orderFormOpen}
+            stateHandler={[orderForm, setOrderForm]}
+            tw="right-0"
+            className="animate__animated animate__slideInUp"
+            onCloseClick={() => setOrderFormOpen(false)}
+          />
         </div>
       </div>
-    </MainLayout >
+    </MainLayout>
   );
 }

@@ -1,12 +1,24 @@
-import type firebase from 'firebase';
+import type fb from 'firebase';
 
 export interface FireModelTimestamp {
-  _created: firebase.firestore.Timestamp;
-  _updated: firebase.firestore.Timestamp;
-  _deleted: firebase.firestore.Timestamp | null;
+  _created: fb.firestore.Timestamp;
+  _updated: fb.firestore.Timestamp;
+  _deleted: fb.firestore.Timestamp | null;
 }
 
 export type ModelUI<T> = Record<string, unknown> & Partial<T>;
+
+export interface Address {
+  country: string;
+  province: string;
+  city: string;
+  streetName: string;
+}
+
+export type IndonesiaAddress = Address & {
+  district: string;
+  village: string;
+};
 
 export interface NewsletterSubscriber {
   name: string;
@@ -31,6 +43,18 @@ export interface Product {
     reviews: number;
     sold: number;
   }>;
+}
+
+export interface Order {
+  ordererName: string;
+  productId: string;
+  amount: number;
+  contactPerson: string;
+  shippingAddress: IndonesiaAddress;
+  notes: string;
+  _ui: ModelUI<{
+    productName: string;
+  }>
 }
 
 export type FireModel<T> = T & FireModelTimestamp;
