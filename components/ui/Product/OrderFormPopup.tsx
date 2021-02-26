@@ -27,10 +27,12 @@ type Props = HTMLAttributes<HTMLDivElement> &  ThePopupProps & {
     Dispatch<SetStateAction<Order>>,
   ];
   onCloseClick?: () => void;
+  onSubmit?: () => void;
 }
 
 export default function OrderFormPopup({
   isOpen = false,
+  onSubmit,
   onCloseClick,
   stateHandler = useState<Order>({
     ordererName: '',
@@ -85,7 +87,7 @@ export default function OrderFormPopup({
             })
               .then(() => {
                 orderViaWhatsapp(order);
-                e.currentTarget.reset();
+                onSubmit?.();
               });
           }}
         >

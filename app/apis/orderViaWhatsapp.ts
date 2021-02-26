@@ -8,7 +8,7 @@ const newMessage = function () {
 
   return {
     addLine: function (text: string) {
-      msg += `\n${text}`;
+      msg += msg ? `\n${text}` : text;
     },
 
     addRow: function (rowName: string, rowContent: any) {
@@ -29,7 +29,16 @@ const shippingAddressToString = ({
   province,
   country
 }: Order['shippingAddress']) => {
-  return `${streetName}, ${village}, ${district}, ${city}, ${province}, ${country}`;
+  const sortedShippingDetail = [
+    streetName,
+    village,
+    district,
+    city,
+    province,
+    country,
+  ];
+
+  return sortedShippingDetail.filter(Boolean).join(', ');
 }
 
 export default function orderViaWhatsapp(order: Order) {
@@ -38,6 +47,7 @@ export default function orderViaWhatsapp(order: Order) {
 
   text.addLine('Salam Kreatif,');
   text.addRow('Halo min, saya pesan produk', `${order._ui.productName}#${order.productId}`);
+  text.addLine('');
   text.addRow('Varian', '-');
   text.addRow('Jumlah', order.amount);
   text.addRow('Nama Pemesan', order.ordererName);

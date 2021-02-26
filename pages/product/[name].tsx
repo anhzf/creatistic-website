@@ -229,6 +229,24 @@ export default function Product({ product }: InferGetServerSidePropsType<typeof 
             tw="right-0"
             className="animate__animated animate__slideInUp"
             onCloseClick={() => setOrderFormOpen(false)}
+            onSubmit={() => setOrderForm({
+              ordererName: '',
+              productId: product.uid,
+              amount: 1,
+              contactPerson: '',
+              notes: '',
+              shippingAddress: {
+                country: 'Indonesia',
+                province: 'Jawa Tengah',
+                city: 'Surakarta',
+                district: '',
+                village: '',
+                streetName: '',
+              },
+              _ui: {
+                productName: product.name,
+              },
+            })}
           />
         </div>
       </div>
