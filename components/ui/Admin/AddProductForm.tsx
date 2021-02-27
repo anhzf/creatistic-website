@@ -45,6 +45,7 @@ function AddProductForm({ onSubmit }: Props) {
 
       ref.set({
         ...product,
+        link: productLink,
         price: Number(product.price),
         _created: firebase.firestore.Timestamp.now(),
         _updated: firebase.firestore.Timestamp.now(),

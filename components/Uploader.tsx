@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction, useImperativeHandle, useMemo, useState } from 'react';
+import { FILE_TYPES } from 'app/utils/file';
 import type fb from 'firebase'
 
 type Props = {
@@ -9,19 +10,6 @@ type Props = {
   ];
   accept?: JSX.IntrinsicElements['input']['accept'];
 };
-
-const IMAGE_TYPES = [
-  'image/apng',
-  'image/bmp',
-  'image/gif',
-  'image/jpeg',
-  'image/pjpeg',
-  'image/png',
-  'image/svg+xml',
-  'image/tiff',
-  'image/webp',
-  'image/x-icon'
-];
 
 export interface UploaderRef {
   upload: () => Promise<fb.storage.UploadTaskSnapshot[]>;
@@ -38,7 +26,7 @@ const Uploader = React.forwardRef<UploaderRef, Props>(({
 
       return (
         <div key={e.name} className="w-full h-40 bg-white shadow flex flex-col justify-center">
-          {IMAGE_TYPES.includes(e.type)
+          {FILE_TYPES.image.includes(e.type)
             && <img src={objUrl} className="h-32 object-cover" />}
           <a
             title={e.name}

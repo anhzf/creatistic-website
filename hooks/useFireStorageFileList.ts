@@ -15,7 +15,6 @@ export default function useFireStorageFileList(listRef: fb.storage.Reference) {
     setLoading(true);
     (async () => {
       const { items } = await listRef.listAll();
-      console.log(items);
 
       setList(await Promise.all(
         items.map(async (item) => ({
