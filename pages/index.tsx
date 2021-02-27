@@ -47,86 +47,35 @@ export default function Home() {
       </header>
 
       <main tw="w-full max-w-screen-lg py-8 flex flex-col justify-center items-center gap-y-2 sm:gap-y-5">
-        <HighlightedProduct className="group">
-          <HighlightedProduct.ImageContainer>
-            <Image
-              src="/assets/index/M4.png"
-              layout="fill"
-              objectFit="cover"
-            />
-          </HighlightedProduct.ImageContainer>
+        <HighlightedProduct
+          title="Ministic"
+          description="Sebuah meja kecil minimalis terbuat dari kayu jati yang mampu memberikan estetika lebih pada ruangan anda"
+          imgSrc="/assets/index/highlight_ministic.png"
+          href="/product/ministic"
+        />
 
-          <HighlightedProduct.Caption>
-            <HighlightedProduct.CaptionTitle>
-              Ministic
-            </HighlightedProduct.CaptionTitle>
+        <HighlightedProduct
+          title="Stalactic"
+          description="Rak bungan minimalis yang mampu mempercantik ruangan anda, bentuknya yang minimalis mampu memberikan kesan elegan bagi ruangan, cocok sekali untuk anda yang menyukai desain minimalis"
+          imgSrc="/assets/index/highlight_stalactic.png"
+          href="/product/stalactic"
+          right
+        />
 
-            <HighlightedProduct.CaptionSubtitle>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error, quaerat.
-            </HighlightedProduct.CaptionSubtitle>
+        <HighlightedProduct
+          title="Stairtic"
+          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus, quod."
+          imgSrc="/assets/index/highlight_stairtic.png"
+          href="/product/ministic"
+        />
 
-            <Link href="/product/ministic" shallow>
-              <HighlightedProduct.ActionBtn>
-                Lihat detail
-              </HighlightedProduct.ActionBtn>
-            </Link>
-
-          </HighlightedProduct.Caption>
-        </HighlightedProduct>
-
-        <HighlightedProduct className="group">
-          <HighlightedProduct.ImageContainer>
-            <Image
-              src="/assets/index/M4.png"
-              layout="fill"
-              objectFit="cover"
-            />
-          </HighlightedProduct.ImageContainer>
-
-          <HighlightedProduct.Caption tw="right-0 items-end text-right">
-            <HighlightedProduct.CaptionTitle>
-              Ministic
-            </HighlightedProduct.CaptionTitle>
-
-            <HighlightedProduct.CaptionSubtitle>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur esse cum provident aliquam inventore, quam tempora rem molestias velit accusamus temporibus consectetur vero blanditiis natus, repellat animi neque soluta reprehenderit? Consequuntur esse aut veritatis deleniti. Voluptatum, iure esse! Saepe, quibusdam cumque sapiente est perspiciatis nisi minus sunt recusandae voluptatum sit necessitatibus consectetur modi tenetur fugit laborum pariatur vel commodi fuga natus enim molestias. Numquam ipsam corrupti totam sunt rerum ratione iusto, maiores consectetur beatae eos assumenda sequi quia nesciunt illum, atque excepturi labore cupiditate pariatur doloribus natus dolorum repudiandae nisi ut tenetur. Eaque repellat nihil quo! Facere at sint consequatur!
-            </HighlightedProduct.CaptionSubtitle>
-
-            <Link href="/product/ministic" shallow>
-              <HighlightedProduct.ActionBtn>
-                Lihat detail
-              </HighlightedProduct.ActionBtn>
-            </Link>
-
-          </HighlightedProduct.Caption>
-        </HighlightedProduct>
-
-        <HighlightedProduct className="group">
-          <HighlightedProduct.ImageContainer>
-            <Image
-              src="/assets/index/M4.png"
-              layout="fill"
-              objectFit="cover"
-            />
-          </HighlightedProduct.ImageContainer>
-
-          <HighlightedProduct.Caption>
-            <HighlightedProduct.CaptionTitle>
-              Ministic
-            </HighlightedProduct.CaptionTitle>
-
-            <HighlightedProduct.CaptionSubtitle>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error, quaerat.
-            </HighlightedProduct.CaptionSubtitle>
-
-            <Link href="/product/ministic" shallow>
-              <HighlightedProduct.ActionBtn>
-                Lihat detail
-              </HighlightedProduct.ActionBtn>
-            </Link>
-
-          </HighlightedProduct.Caption>
-        </HighlightedProduct>
+        <HighlightedProduct
+          title="Stifftic"
+          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus, quod."
+          imgSrc="/assets/index/highlight_stifftic.png"
+          href="/product/ministic"
+          right
+        />
       </main>
 
       {isSubscribeModalOpen ?
