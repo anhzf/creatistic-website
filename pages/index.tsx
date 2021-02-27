@@ -19,7 +19,7 @@ export default function Home() {
   const slides = useMemo(
     () => homeCarouselMedia.map(media => ({
       imgSrc: media.url,
-      objectFit: media.metadata.customMetadata?.objectFit,
+      objectFit: media.metadata.customMetadata?.objectFit || 'contain',
     } as Slide)),
     [homeCarouselMedia],
   );
@@ -62,16 +62,16 @@ export default function Home() {
 
         <HighlightedProduct
           title="Stairtic"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus, quod."
+          description="Rak bunga ini berbentuk seperti tangga yang memberikan kesan rapi bagi ruangan anda, cocok untuk anda yang menyukai desain simpel dan rapi"
           imgSrc="/assets/index/highlight_stairtic.png"
-          href="/product/ministic"
+          href="/product/stairtic"
         />
 
         <HighlightedProduct
           title="Stifftic"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus, quod."
+          description="Rak minimalis yang mempunyai kesan kokoh dan kuat, rak ini sangat cocok untuk menempatkan barang secara estetik dan dapat memberikan keeleganan bagi ruangan anda"
           imgSrc="/assets/index/highlight_stifftic.png"
-          href="/product/ministic"
+          href="/product/stifftic"
           right
         />
       </main>

@@ -14,7 +14,7 @@ const Caption = styled.div<{ right?: boolean }>(({ right }) => [
 
 const CaptionTitle = tw.h3`mt-4 font-mont text-5xl text-white line-clamp-1 lowercase`;
 
-const CaptionSubtitle = tw.p`w-full max-w-lg my-1 font-medium text-white line-clamp-3`;
+const CaptionSubtitle = tw.p`w-full max-w-lg my-1 font-medium text-sm sm:text-base text-white line-clamp-3`;
 
 const ActionBtn = tw.a`inline-block cursor-pointer mt-3 px-4 py-2 bg-white font-semibold text-sm text-blue-500 capitalize rounded-lg shadow hover:bg-gray-100 focus:outline-none focus:bg-gray-300`;
 
@@ -60,7 +60,7 @@ export default function HighlightedProduct({ title, description, imgSrc, href, r
           {description}
         </CaptionSubtitle>
 
-        <Link href={href} shallow>
+        <Link href={href} passHref shallow>
           <ActionBtn>
             Lihat detail
           </ActionBtn>
