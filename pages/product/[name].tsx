@@ -53,10 +53,7 @@ export const getServerSideProps: GetServerSideProps<ServerProps> = async ({ para
   }
 
   return {
-    redirect: {
-      destination: '/product/404',
-      permanent: true,
-    },
+    notFound: true,
   };
 };
 
