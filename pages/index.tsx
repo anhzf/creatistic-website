@@ -1,7 +1,5 @@
 import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import 'twin.macro';
-import Image from 'next/image';
-import Link from 'next/link';
 import { HiX, HiMail } from 'react-icons/hi';
 import fireStorage from 'app/fireStorage';
 import MainLayout from 'components/layouts/MainLayout';
