@@ -110,6 +110,10 @@ export default function Product({ product }: InferGetServerSidePropsType<typeof 
               isActive={slideCursor === i}
               onClick={() => setSlideCursor(i)}
             >
+              <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-gray-300 animate-pulse">
+                <span className="text-xs text-center text-red-400">Can't display media</span>
+              </div>
+
               <Image
                 src={e.url}
                 width={200}
