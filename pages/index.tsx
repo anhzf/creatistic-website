@@ -18,7 +18,7 @@ export default function Home() {
   const [homeCarouselMedia] = useFireStorageFileList(fireStorage.homeCarousel);
   const slides = useMemo(
     () => homeCarouselMedia.map(media => ({
-      imgSrc: media.url,
+      src: media.url,
       objectFit: media.metadata.customMetadata?.objectFit || 'contain',
     } as Slide)),
     [homeCarouselMedia],

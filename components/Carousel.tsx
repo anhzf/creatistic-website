@@ -17,7 +17,8 @@ interface SlideContainerProps {
 }
 
 export interface Slide {
-  imgSrc: string;
+  src: string;
+  isVideo?: boolean;
   rounded?: boolean;
   objectFit?: Parameters<typeof Image>[0]['objectFit'];
 }
@@ -31,19 +32,26 @@ const SlideContainer = styled.div(({ active = false, rounded = false }: SlideCon
 ]);
 
 const Slide = ({
-  imgSrc,
+  src,
+  isVideo,
   rounded,
   objectFit,
   ...props
 }: SlideProps) => (
   <SlideContainer {...props}>
-    <Image
-      src={imgSrc}
-      layout="fill"
-      loading="eager"
-      objectFit={objectFit || 'cover'}
-      className={rounded ? 'rounded-xl' : ''}
-    />
+    {isVideo ? (
+      <video src={src} controls className={`w-full h-full ${rounded ? 'rounded-xl' : ''}`}>
+        <span>Can't display media</span>
+      </video>
+    ) : (
+      <Image
+        src={src}
+        layout="fill"
+        loading="eager"
+        objectFit={objectFit || 'cover'}
+        className={rounded ? 'rounded-xl' : ''}
+      />
+    )}
   </SlideContainer>
 );
 

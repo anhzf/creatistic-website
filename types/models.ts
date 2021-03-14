@@ -30,6 +30,12 @@ export interface PriceDiscount {
   percent?: number;
 }
 
+// export interface ProductMedia {
+//   source: string;
+//   sourceType: 'image-storage' | 'youtube';
+//   variantName?: string;
+// }
+
 export interface Product {
   name: string;
   price: number;
@@ -37,6 +43,7 @@ export interface Product {
   link: string;
   category: string;
   specs: Record<string, string>;
+  // media: ProductMedia[];
   discount?: PriceDiscount;
   _ui: ModelUI<{
     rating: number;

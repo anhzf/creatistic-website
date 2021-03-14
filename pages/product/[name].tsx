@@ -13,7 +13,8 @@ import List from 'components/List';
 import Img from 'components/elements/Img';
 import Chip from 'components/elements/Chip';
 import useFireStorageFileList from 'hooks/useFireStorageFileList';
-import { Order, Product as IProduct } from 'types/models';
+import { FILE_TYPES } from 'app/utils/file';
+import type { Order, Product as IProduct } from 'types/models';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
 interface SectionProps extends HTMLAttributes<HTMLElement> {
@@ -90,8 +91,9 @@ export default function Product({ product }: InferGetServerSidePropsType<typeof 
     [productMedia]
   );
 
-  useEffect(() => setSlides(productMedia.map(media => ({
-    imgSrc: media.url,
+  useEffect(() => setSlides(productMedia.map(({ url, metadata }) => ({
+    src: url,
+    isVideo: !FILE_TYPES.image.includes(metadata.contentType),
   }))), [productMedia]);
 
   return (
@@ -110,10 +112,14 @@ export default function Product({ product }: InferGetServerSidePropsType<typeof 
               isActive={slideCursor === i}
               onClick={() => setSlideCursor(i)}
             >
-              <Img
-                src={e.url}
-                className="w-48 h-28"
-              />
+              {FILE_TYPES.image.includes(e.metadata.contentType) ?
+                (<Img src={e.url} className="w-48 h-28" />)
+                : (
+                  <video src={e.url} className="w-48 h-28">
+                    <span>Can't display media</span>
+                  </video>
+                )
+              }
 
               {e.metadata.customMetadata?.variantName && (
                 <VariantChip
