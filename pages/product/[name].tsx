@@ -1,5 +1,4 @@
 import { HTMLAttributes, useEffect, useMemo, useState } from 'react';
-import Image from 'next/image';
 import tw, { styled } from 'twin.macro';
 import { HiStar } from 'react-icons/hi';
 import { ImWhatsapp } from 'react-icons/im';
@@ -11,6 +10,7 @@ import OrderFormPopup from 'components/ui/Product/OrderFormPopup';
 import Carousel, { Slide } from 'components/Carousel'
 import ImageRowList from 'components/ImageRowList';
 import List from 'components/List';
+import Img from 'components/elements/Img';
 import Chip from 'components/elements/Chip';
 import useFireStorageFileList from 'hooks/useFireStorageFileList';
 import { Order, Product as IProduct } from 'types/models';
@@ -110,16 +110,9 @@ export default function Product({ product }: InferGetServerSidePropsType<typeof 
               isActive={slideCursor === i}
               onClick={() => setSlideCursor(i)}
             >
-              <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-gray-300 animate-pulse">
-                <span className="text-xs text-center text-red-400">Can't display media</span>
-              </div>
-
-              <Image
+              <Img
                 src={e.url}
-                width={200}
-                height={120}
-                layout="fixed"
-                objectFit="cover"
+                className="w-48 h-28"
               />
 
               {e.metadata.customMetadata?.variantName && (
