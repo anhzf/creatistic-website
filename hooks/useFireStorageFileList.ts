@@ -25,7 +25,7 @@ export default function useFireStorageFileList(listRef: fb.storage.Reference) {
       ));
       setLoading(false);
     })();
-  }, []);
+  }, [listRef]);
 
   return [list, loading] as const;
 }
