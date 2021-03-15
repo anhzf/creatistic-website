@@ -1,21 +1,25 @@
-import React, { useState, useMemo, ChangeEvent, useEffect, useRef } from 'react';
+import React, { useState, useMemo, ChangeEvent, useEffect } from 'react';
 import slugify from 'slugify';
 import firebase from 'firebase/app';
 import fireStorage from 'app/fireStorage';
 import fireCollection from 'app/fireCollection';
+import getProduct from 'app/apis/getProduct';
 import TextInput from 'components/elements/TextInput';
-import MapDataForm, { MapData, MapDataListToObject } from 'components/MapDataForm';
-import Uploader, { UploaderRef } from 'components/Uploader';
+import MapDataForm, { MapData, MapDataListToObject, ObjectToMapDataList } from 'components/MapDataForm';
+import Uploader from 'components/Uploader';
 import Button from 'components/elements/Button';
 import useMappedState from 'hooks/useMappedState';
 import type { Product } from 'types/models';
 
 type Props = JSX.IntrinsicElements['input'] & {
+  productId?: string;
+
   onSubmit: (payload: Product) => void;
 }
 
-function AddProductForm({ onSubmit }: Props) {
-  const ref = useMemo(() => fireCollection.product.doc(), []);
+const ProductForm = function ({ productId, onSubmit }: Props) {
+  const [docRef, setDocRef] = useState(fireCollection.product.doc(productId));
+  const [productDataLoading, setProductDataLoading] = useState(true);
   const [product, setProduct, set] = useMappedState<Product, [ChangeEvent<HTMLInputElement>]>(
     {
       name: '',
@@ -31,75 +35,88 @@ function AddProductForm({ onSubmit }: Props) {
   );
   const [specs, setSpecs] = useState<MapData[]>([]);
   const productLink = useMemo(() => (product.link || slugify(product.name)).toLowerCase(), [product]);
-  const uploaderRef = useRef<UploaderRef>(null);
 
-  useEffect(() => setProduct({
-    ...product,
-    specs: MapDataListToObject(specs),
-  }), [specs]);
+  useEffect(() => {
+    (async () => {
+      const doc = await getProduct(productId);
 
-  return (<>
-    <form id="addProductForm" onSubmit={e => {
-      e.preventDefault();
-      uploaderRef.current?.upload();
+      setProductDataLoading(false);
 
-      ref.set({
-        ...product,
-        link: productLink,
-        price: Number(product.price),
-        _created: firebase.firestore.Timestamp.now(),
-        _updated: firebase.firestore.Timestamp.now(),
-        _deleted: null,
-      })
-        .then(() => onSubmit(product));
-    }}>
-      <fieldset>
-        <legend>Tambah Produk</legend>
+      if (doc.exists) {
+        const docData = doc.data() as Product;
 
-        <TextInput
-          placeholder="Nama produk"
-          value={product.name}
-          onChange={set('name')}
-          required
-        />
+        setDocRef(doc.ref);
+        setProduct(docData);
+        setSpecs(ObjectToMapDataList(docData.specs));
+      }
+    })();
+  }, []);
 
-        <TextInput
-          placeholder="Harga produk"
-          value={product.price}
-          type="number"
-          onChange={set('price')}
-          required
-        />
+  useEffect(() => set('specs').setVal(MapDataListToObject(specs)), [specs]);
 
-        <TextInput
-          placeholder="Dekripsi produk"
-          value={product.description}
-          onChange={set('description')}
-          required
-        />
+  return productDataLoading
+    ? (<span>Loading data...</span>)
+    : (<>
+      <form id="ProductForm" onSubmit={e => {
+        e.preventDefault();
 
-        <TextInput
-          placeholder="Link produk"
-          value={productLink}
-          onChange={set('link')}
-          required
-        />
+        docRef.set({
+          ...product,
+          link: productLink,
+          price: Number(product.price),
+          _created: firebase.firestore.Timestamp.now(),
+          _updated: firebase.firestore.Timestamp.now(),
+          _deleted: null,
+        })
+          .then(() => onSubmit(product));
+      }}>
+        <fieldset>
+          <legend>Form Produk</legend>
 
-        <TextInput
-          placeholder="Kategori"
-          value={product.category}
-          onChange={set('category')}
-          required
-        />
-      </fieldset>
-    </form>
+          <TextInput
+            placeholder="Nama produk"
+            value={product.name}
+            onChange={set('name')}
+            required
+          />
 
-    <Uploader ref={uploaderRef} storageRef={fireStorage.product.child(ref.id)} />
+          <TextInput
+            placeholder="Harga produk"
+            value={product.price}
+            type="number"
+            onChange={set('price')}
+            required
+          />
 
-    <MapDataForm dataHandler={[specs, setSpecs]} />
+          <TextInput
+            placeholder="Dekripsi produk"
+            value={product.description}
+            onChange={set('description')}
+            required
+          />
 
-    <Button type="submit" form="addProductForm">Save</Button>
-  </>)
+          <TextInput
+            placeholder="Link produk"
+            value={productLink}
+            onChange={set('link')}
+            required
+          />
+
+          <TextInput
+            placeholder="Kategori"
+            value={product.category}
+            onChange={set('category')}
+            required
+          />
+        </fieldset>
+      </form>
+
+      <Uploader storageRef={fireStorage.product.child(docRef.id)} />
+
+      <MapDataForm dataHandler={[specs, setSpecs]} />
+
+      <Button type="submit" form="ProductForm">Save</Button>
+    </>);
 };
 
-export default React.memo(AddProductForm);
+export default React.memo(ProductForm);

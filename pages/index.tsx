@@ -9,6 +9,7 @@ import Overlay from 'components/elements/Overlay';
 import Alert from 'components/elements/Alert';
 import Carousel, { Slide } from 'components/Carousel';
 import useFireStorageFileList from 'hooks/useFireStorageFileList';
+import { FILE_TYPES } from 'app/utils/file';
 
 const ALERT_TIMEOUT = 10000;
 
@@ -17,9 +18,10 @@ export default function Home() {
   const [alertMsg, setAlertMsg] = useState<ReactNode | null>(null);
   const [homeCarouselMedia] = useFireStorageFileList(fireStorage.homeCarousel);
   const slides = useMemo(
-    () => homeCarouselMedia.map(media => ({
-      src: media.url,
-      objectFit: media.metadata.customMetadata?.objectFit || 'contain',
+    () => homeCarouselMedia.map(({ url, metadata }) => ({
+      src: url,
+      isVideo: !FILE_TYPES.image.includes(metadata.contentType),
+      objectFit: metadata.customMetadata?.objectFit || 'contain',
     } as Slide)),
     [homeCarouselMedia],
   );

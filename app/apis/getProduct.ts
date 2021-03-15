@@ -11,3 +11,9 @@ export const getProductBy = function (keyName: keyof Product) {
 };
 
 export const getProductByLink = getProductBy('link');
+
+export const getProductById = (id?: string) => fireCollection.product.doc(id).get();
+
+export default async function getProduct(idOrLink?: string) {
+  return (await getProductByLink(idOrLink)) ?? (await getProductById(idOrLink));
+}

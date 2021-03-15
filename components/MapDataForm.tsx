@@ -70,3 +70,10 @@ export const MapDataListToObject = function (mapDataList: MapData[]) {
     [mapData.key]: mapData.value,
   }), {});
 };
+
+export const ObjectToMapDataList = function (data: Record<string, string>): MapData[] {
+  return Object.entries(data).map(([k, v]) => ({
+    key: k,
+    value: v,
+  }))
+}
