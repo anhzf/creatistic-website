@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import type fb from 'firebase';
 
 export interface IStorageFile {
@@ -10,10 +10,9 @@ export interface IStorageFile {
 export default function useFireStorageFileList(listRef: fb.storage.Reference) {
   const [list, setList] = useState<IStorageFile[]>([]);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    (async () => {
+  const update = useCallback(
+    async () => {
+      setLoading(true);
       const { items } = await listRef.listAll();
 
       setList(await Promise.all(
@@ -24,8 +23,13 @@ export default function useFireStorageFileList(listRef: fb.storage.Reference) {
         })),
       ));
       setLoading(false);
-    })();
+    },
+    [listRef],
+  )
+
+  useEffect(() => {
+    update()
   }, [listRef]);
 
-  return [list, loading] as const;
+  return [list, loading, update] as const;
 }

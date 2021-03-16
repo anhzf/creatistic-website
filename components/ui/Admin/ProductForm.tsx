@@ -113,6 +113,7 @@ const ProductForm = function ({ productId, onSubmit }: Props) {
 
       <Uploader storageRef={fireStorage.product.child(docRef.id)} />
 
+      <h5>Spesifikasi Produk</h5>
       <MapDataForm dataHandler={[specs, setSpecs]} />
 
       <Button type="submit" form="ProductForm">Save</Button>

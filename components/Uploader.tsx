@@ -1,16 +1,18 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import tw from 'twin.macro';
-import { HiOutlinePlus } from 'react-icons/hi';
+import { HiOutlinePlus, HiTrash } from 'react-icons/hi';
 import { FILE_TYPES } from 'app/utils/file';
 import useFireStorageFileList from 'hooks/useFireStorageFileList';
-import type fb from 'firebase';
 import Img from 'components/elements/Img';
+import type fb from 'firebase';
+import { fbs } from 'app/services/firebaseClient';
 
 interface IPreviewItem {
   url: string;
   fileName: string;
   fileType: string;
-  isUploaded: boolean;
+  pathRef: string;
+  uploadTask?: fb.storage.UploadTask;
 }
 
 const PreviewItem = tw.div`relative w-full h-40 bg-white shadow flex flex-col justify-center`;
@@ -25,21 +27,33 @@ const Uploader = function ({
   accept
 }: Props) {
   const fileInputId = Date.now().toString();
-  const [files, setFiles] = useState<File[]>([]);
-  const [storageFiles, storageFilesLoading] = useFireStorageFileList(storageRef);
+  const [files, setFiles] = useState<IPreviewItem[]>([]);
+  const [storageFiles, storageFilesLoading, updateStorageFiles] = useFireStorageFileList(storageRef);
+  const pushFiles = useCallback(
+    (...filePayload: File[]) => setFiles([
+      ...files,
+      ...filePayload.map(file => {
+        const ref = storageRef.child(file.name);
+
+        return {
+          url: URL.createObjectURL(file),
+          fileName: file.name,
+          fileType: file.type,
+          uploadTask: ref.put(file),
+          pathRef: ref.fullPath,
+        };
+      }),
+    ]),
+    [storageRef, files],
+  );
   const previewItems = useMemo<IPreviewItem[]>(() => [
-    ...storageFiles.map(file => ({
-      url: file.url,
-      fileName: file.metadata.name,
-      fileType: file.metadata.contentType,
-      isUploaded: true,
-    })),
-    ...files.map(item => ({
-      url: URL.createObjectURL(item),
-      fileName: item.name,
-      fileType: item.type,
-      isUploaded: false,
-    })),
+    ...storageFiles.map(snapshot => ({
+      url: snapshot.url,
+      fileName: snapshot.metadata.name,
+      fileType: snapshot.metadata.contentType,
+      pathRef: snapshot.fullPath,
+    } as IPreviewItem)),
+    ...files,
   ], [storageFiles, files]);
 
   return (
@@ -57,6 +71,13 @@ const Uploader = function ({
             >
               {el.fileName}
             </a>
+
+            <button
+              className="absolute top-0 right-0 m-2"
+              onClick={() => fbs.storage.ref(el.pathRef).delete().then(updateStorageFiles)}
+            >
+              <HiTrash className="text-red-500" />
+            </button>
           </PreviewItem>
         ))}
 
@@ -69,7 +90,7 @@ const Uploader = function ({
                 id={fileInputId}
                 type="file"
                 accept={accept}
-                onChange={e => setFiles(Array.from(e.target.files ?? []))}
+                onChange={e => pushFiles(...Array.from(e.target.files ?? []))}
                 multiple
                 className="absolute top-0 left-0 opacity-0"
               />
