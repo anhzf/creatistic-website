@@ -38,12 +38,16 @@ export default function Home() {
 
   return (
     <MainLayout className="items-center">
-      <header className="relative w-full px-2 sm:px-4 py-4 flex flex-col items-center">
-        <Carousel
-          slides={slides}
-          rounded
-          className="w-full max-w-screen-lg h-80 sm:h-96"
-        />
+      <header className="relative w-full max-w-screen-lg px-2 sm:px-0 py-4 flex flex-col items-center">
+        <div className="aspect-w-16 aspect-h-6 w-full h-full">
+          <div>
+            <Carousel
+              slides={slides}
+              rounded
+              className="w-full h-full"
+            />
+          </div>
+        </div>
       </header>
 
       <main tw="w-full max-w-screen-lg py-8 flex flex-col justify-center items-center gap-y-2 sm:gap-y-5">
