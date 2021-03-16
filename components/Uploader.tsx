@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import tw from 'twin.macro';
 import { HiOutlinePlus, HiTrash } from 'react-icons/hi';
 import { FILE_TYPES } from 'app/utils/file';
@@ -55,6 +55,10 @@ const Uploader = function ({
     } as IPreviewItem)),
     ...files,
   ], [storageFiles, files]);
+
+  useEffect(() => {
+    updateStorageFiles();
+  }, [storageRef])
 
   return (
     <div className="flex flex-col shadow-md">

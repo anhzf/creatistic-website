@@ -28,8 +28,8 @@ export default function useFireStorageFileList(listRef: fb.storage.Reference) {
   )
 
   useEffect(() => {
-    update()
-  }, [listRef]);
+    update();
+  }, []);
 
   return [list, loading, update] as const;
 }
